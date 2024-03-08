@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ONG</title>
+    <title>Semeando o Futuro</title>
+    <link rel="icon" type="image/x-icon" href="/img/logoONG.jpeg">
 
     <!-- bootstrap css-->
     <link
@@ -11,92 +12,91 @@
       type="text/css"
       href="/bootstrap/css/bootstrap.min.css"
     />
+    <!-- bootstrap icons css-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/bootstrap-icons/bootstrap-icons.css"
+    />
 
-    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/theme.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
+    <header id="header" class="header d-flex align-items-center">
+
+      <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center">
+          <img src="/img/logoONG.jpeg" alt="logo da ONG">
+          <h1>Semeando o Futuro<span>.</span></h1>
+        </a>
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a href="#hero">Início</a></li>
+            <li><a href="#about">Sobre Nós</a></li>
+            <li><a href="#services">Causas</a></li>
+            <li><a href="#recent-posts">Ajude também</a></li>
+            <li><a href="pagina-Doar.html">Doar</a></li>
+            <li><a href="#contact">Contato</a></li>
+            <li><a href="/login">Entrar</a></li>
           </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+        </nav>
+  
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+  
+      </div>
+    </header>
+    <%- body %>
+    <footer id="footer" class="footer">
+
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a href="/" class="logo d-flex align-items-center">
+              <img src="/img/logoONG.jpeg" alt="logo da ONG"><span>Semeando o Futuro</span>
+            </a>
+            <p>Um pequeno gesto hoje, um planeta melhor amanhã.</p>
+            <div class="social-links d-flex mt-4">
+              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            </div>
+          </div>
+  
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Links Úteis</h4>
+            <ul>
+              <li><a href="#home">Início</a></li>
+              <li><a href="#about">Sobre Nós</a></li>
+              <li><a href="#portfolio">Participe</a></li>
+              <li><a href="pagina-Doar.html">Doar</a></li>
+            </ul>
+          </div>
+  
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Causas</h4>
+            <ul>
+              <li><a href="#services">Reflorestamento</a></li>
+              <li><a href="#services">Reciclagem</a></li>
+              <li><a href="#services">Energias Renováveis</a></li>
+              <li><a href="#services">Educação Ambiental</a></li>
+            </ul>
+          </div>
+  
         </div>
       </div>
-    </nav>
-    <%- body %>
-    <div class="absolute-bottom">
-      <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Features</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">About</a>
-          </li>
-        </ul>
-        <p class="text-center text-muted">© 2022 Company, Inc</p>
-      </footer>
-    </div>
+  
+      <div class="container mt-4">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Semeando o Futuro</span></strong>
+        </div>
+        <div class="credits">
+          Desenvolvido pela equipe da <strong>InovaSoft</strong>
+        </div>
+      </div>
+  
+    </footer>
+    <script src="/js/layout.js"></script>
     <!-- bootstrap script -->
     <script src="/bootstrap/js/bootstrap.js"></script>
     <!-- jquery script -->

@@ -3,7 +3,7 @@
 class LoginController {
 
     loginView(req, res) {
-        res.render('login/index', { layout: 'login/index' });
+        res.render('login/index');
     }
 
     login(req, res) {

@@ -20,6 +20,7 @@ app.use(expressEjsLayout);
 //gerencia bibliotecas
 app.use("/jquery", express.static("./node_modules/jquery/dist/"));
 app.use("/bootstrap", express.static("./node_modules/bootstrap/dist/"));
+app.use("/bootstrap-icons", express.static("./node_modules/bootstrap-icons/font/"));
 
 //configura as rotas existentes no nosso sistema
 app.use("/", homeRoute);
