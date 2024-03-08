@@ -17,4 +17,4 @@ class HomeController {
 }
 
 //permite que a classe homeController seja importado
-module.exports = HomeController;
+export default HomeController;

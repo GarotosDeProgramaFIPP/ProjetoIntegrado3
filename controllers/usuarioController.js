@@ -1,4 +1,4 @@
-const UserModel = require('../models/userModel');
+import UserModel from '../models/userModel.js';
 let userModel = new UserModel();
 class UsuarioController{
 
@@ -37,4 +37,4 @@ class UsuarioController{
 
 }
 
-module.exports = UsuarioController;
+export default UsuarioController;

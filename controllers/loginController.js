@@ -19,4 +19,4 @@ class LoginController {
     }
 }
 
-module.exports = LoginController;
+export default LoginController;

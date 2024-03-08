@@ -1,8 +1,8 @@
-const express = require("express");
-const expressEjsLayout = require("express-ejs-layouts");
-let homeRoute = require("./routes/homeRoute");
-let usuarioRoute = require("./routes/usuarioRoute");
-let loginRoute = require("./routes/loginRoute");
+import express from "express";
+import expressEjsLayout from "express-ejs-layouts";
+import homeRoute from "./routes/homeRoute.js";
+import usuarioRoute from "./routes/usuarioRoute.js";
+import loginRoute from "./routes/loginRoute.js";
 const app = express();
 
 //configura o ejs como view engine da nossa aplicação
@@ -18,7 +18,7 @@ app.use(express.static("public"));
 app.use(expressEjsLayout);
 
 //gerencia bibliotecas
-app.use("/jquery", express.static("./node_modules/jquery/dist/"))
+app.use("/jquery", express.static("./node_modules/jquery/dist/"));
 app.use("/bootstrap", express.static("./node_modules/bootstrap/dist/"));
 
 //configura as rotas existentes no nosso sistema

@@ -1,4 +1,4 @@
-const Database = require('../utils/database');
+import Database from '../utils/database.js';
 let db = new Database();
 
 class UserModel {
@@ -45,4 +45,4 @@ class UserModel {
     }
 }
 
-module.exports = UserModel;
+export default UserModel;
