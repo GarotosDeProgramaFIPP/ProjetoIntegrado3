@@ -1,0 +1,26 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        fetch('/usuarios/users')
+        .then(r => {
+            return r.json();
+        }) 
+        .then(r=> {
+            //console.log(r);
+        })
+    })
+</script>
+
+<h1>Usuários cadastrados</h1>
+<a class="btn btn-secondary" href="usuarios/cadastrar">Novo Usuário</a>
+<table id="table-users" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Email</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
