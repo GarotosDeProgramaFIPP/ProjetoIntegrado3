@@ -53,7 +53,7 @@ npm run dev
   <br />
   <br />
   
-  - 3.5 Merge changes
+  - 3.6 Merge changes
   <br />
   <img src="/public/img/readme/merge-request.png">
   
