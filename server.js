@@ -1,6 +1,6 @@
 import express from "express";
 import expressEjsLayout from "express-ejs-layouts";
-import homeRoute from "./routes/homeRoute.js";
+import { homeRoute, produtosRoute } from "./routes/index.js";
 const app = express();
 
 //configura o ejs como view engine da nossa aplicação
@@ -18,10 +18,14 @@ app.use(expressEjsLayout);
 //gerencia bibliotecas
 app.use("/jquery", express.static("./node_modules/jquery/dist/"));
 app.use("/bootstrap", express.static("./node_modules/bootstrap/dist/"));
-app.use("/bootstrap-icons", express.static("./node_modules/bootstrap-icons/font/"));
+app.use(
+  "/bootstrap-icons",
+  express.static("./node_modules/bootstrap-icons/font/")
+);
 
 //configura as rotas existentes no nosso sistema
 app.use("/", homeRoute);
+app.use("/produtos", produtosRoute);
 
 //inicia o nosso servidor web
 app.listen(5000, function () {
