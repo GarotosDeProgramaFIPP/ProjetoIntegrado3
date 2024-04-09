@@ -1,8 +1,6 @@
 import express from "express";
 import expressEjsLayout from "express-ejs-layouts";
 import homeRoute from "./routes/homeRoute.js";
-import usuarioRoute from "./routes/usuarioRoute.js";
-import loginRoute from "./routes/loginRoute.js";
 const app = express();
 
 //configura o ejs como view engine da nossa aplicação
@@ -24,8 +22,6 @@ app.use("/bootstrap-icons", express.static("./node_modules/bootstrap-icons/font/
 
 //configura as rotas existentes no nosso sistema
 app.use("/", homeRoute);
-app.use("/usuarios", usuarioRoute);
-app.use("/login", loginRoute);
 
 //inicia o nosso servidor web
 app.listen(5000, function () {
