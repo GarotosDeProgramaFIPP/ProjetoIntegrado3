@@ -5,7 +5,9 @@ class ProdutosController {
   listagemView(req, res) {
     res.render("./produtos/listagem");
   }
-
+  cadastrarView(req, res) {
+    res.render("./produtos/cadastrar");
+  }
   editarView(req, res) {
     res.render("./produtos/editar");
   }
