@@ -2,11 +2,8 @@ class PublicasController {
   homeView(req, res) {
     res.render("./publicas/home");
   }
-  sobreView(req, res) {
-    res.render("./publicas/sobre");
-  }
-  postsView(req, res) {
-    res.render("./publicas/posts");
+  ajudeView(req, res) {
+    res.render("./publicas/ajude");
   }
   doacaoView(req, res) {
     res.render("./publicas/doacao");
@@ -19,6 +16,9 @@ class PublicasController {
   }
   loginView(req, res) {
     res.render("./publicas/login");
+  }
+  cadastroView(req, res) {
+    res.render("./publicas/cadastro");
   }
 }
 
