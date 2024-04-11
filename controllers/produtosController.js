@@ -6,10 +6,10 @@ class ProdutosController {
     res.render("./produtos/listagem");
   }
   cadastrarView(req, res) {
-    res.render("./produtos/cadastrar");
+    res.render("./produtos/cadastro");
   }
   editarView(req, res) {
-    res.render("./produtos/editar");
+    res.render("./produtos/edicao");
   }
 
   //Methods

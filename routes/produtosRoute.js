@@ -6,7 +6,7 @@ let ctrl = new ProdutosController();
 
 //view routes
 router.get("/", ctrl.listagemView);
-router.get("/editar", ctrl.editarView);
+router.get("/editar/:id", ctrl.editarView);
 router.get("/cadastrar", ctrl.cadastrarView);
 //mothods routes
 router.get("/all", ctrl.getTodosProdutos);
