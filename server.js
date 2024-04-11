@@ -1,6 +1,6 @@
 import express from "express";
 import expressEjsLayout from "express-ejs-layouts";
-import { homeRoute, produtosRoute } from "./routes/index.js";
+import { homeRoute, produtosRoute, eventosRoute } from "./routes/index.js";
 const app = express();
 
 //configura o ejs como view engine da nossa aplicação
@@ -26,6 +26,7 @@ app.use(
 //configura as rotas existentes no nosso sistema
 app.use("/", homeRoute);
 app.use("/produtos", produtosRoute);
+app.use("/eventos", eventosRoute);
 
 //inicia o nosso servidor web
 app.listen(5000, function () {
