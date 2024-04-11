@@ -78,7 +78,7 @@ class ProdutoModel {
 
   async addNovoProduto() {
     const query =
-      "inserto into tb_produtos set ProdutoNome = ?, ProdutoValor = ?, ProdutoOrigemId = ?";
+      "insert into tb_produtos set ProdutoNome = ?, ProdutoValor = ?, ProdutoOrigemId = ?";
 
     const values = [this.#Nome, this.#Valor, this.#OrigemId];
 

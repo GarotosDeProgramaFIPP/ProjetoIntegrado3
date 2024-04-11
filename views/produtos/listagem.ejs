@@ -19,8 +19,8 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-end">
-    <div class="col col-2">
+  <div class="row d-flex justify-content-end">
+    <div class="col col-2  d-flex justify-content-end">
       <a class="btn btn-primary" href="/produtos/cadastrar">Cadastrar</a>
     </div>
   </div>
@@ -36,23 +36,37 @@
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteWarningLabel">Deseja realmente excluir esse produto?</h5>
+      <div class="modal-header d-flex justify-content-between">
+        <h5 class="modal-title" id="deleteWarningLabel">
+          Deseja realmente excluir esse produto?
+        </h5>
         <button
           type="button"
-          class="close"
+          class="btn btn-link close-modal"
           data-dismiss="modal"
           aria-label="Close"
+          style="color: #6c757d"
         >
-          <span aria-hidden="true">&times;</span>
+          <i class="fa fa-times"></i>
         </button>
       </div>
-      <div class="modal-body"><i class="fas fa-warning"></i></div>
+      <div class="modal-body text-center">
+        <i
+          class="fas fa-exclamation-triangle"
+          style="font-size: 50px; color: red"
+        ></i>
+      </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-secondary close-modal"
+          data-dismiss="modal"
+        >
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary" id="confirm-delete-btn">Excluir</button>
+        <button type="button" class="btn btn-primary" id="confirm-delete-btn">
+          Excluir
+        </button>
       </div>
     </div>
   </div>

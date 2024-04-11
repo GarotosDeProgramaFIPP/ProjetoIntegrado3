@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <span>${produto.origemId}</span>
                   <span>
                     <a href="/produtos/editar/${produto.id}" class="btn btn-primary" style="font-size: 12px"><i class="fas fa-pen"></i></a>
-                    <button class="btn btn-primary" onclick="selectIdToDelete(${produto.id})" data-toggle="modal" data-target="#deleteWarning" style="font-size: 12px; background-color: red; border-color:red">
+                    <button class="btn btn-primary" onclick="openDeleteModal(${produto.id})" data-produto-id=${produto.id} style="font-size: 12px; background-color: red; border-color:red">
                       <i class="fas fa-trash"></i>
                     </button>
                   </span>
@@ -31,14 +31,30 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#loading-row > td").text("Nenhum produto encontrado");
       }
     });
+
+  $("#confirm-delete-btn").on("click", function () {
+    deleteProduto(selectedIdToDelete);
+  });
+
+  $(".close-modal").on("click", function () {
+    $("#deleteWarning").modal("hide");
+  });
 });
 
-const selectIdToDelete = (id) => {
-  selectIdToDelete = id;
-};
+function openDeleteModal(id) {
+  selectedIdToDelete = id;
+  $("#deleteWarning").modal("show");
+}
 
-const deleteProduto = () => {
+function deleteProduto() {
   fetch(`produtos/${selectedIdToDelete}`, {
     method: "delete",
-  });
-};
+  })
+    .then((r) => r.json())
+    .then((r) => {
+      alert(r.message);
+      if (r.ok) {
+        window.location.reload();
+      }
+    });
+}
