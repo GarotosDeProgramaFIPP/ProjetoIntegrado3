@@ -37,6 +37,10 @@
   h6 {
     font-family: var(--font-primary);
   }
+
+  #body-container {
+    padding: 24px 0;
+  }
   
   section {
     padding: 60px 0;

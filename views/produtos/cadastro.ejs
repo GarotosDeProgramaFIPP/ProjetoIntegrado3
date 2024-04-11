@@ -1,0 +1,45 @@
+<div class="container">
+  <h1>Cadastro de Produto</h1>
+  <form id="produto-form">
+    <div>
+      <div class="form-group">
+        <label for="produtoNome" class="form-label">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="produtoNome"
+          name="produtoNome"
+          placeholder="Nome do Produto"
+        />
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="produtoValor" class="form-label">Valor</label>
+        <input
+          type="text"
+          class="form-control"
+          id="produtoValor"
+          name="produtoValor"
+          placeholder="000,00"
+        />
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label for="produtoOrigem" class="form-label">Tipo:</label>
+        <select class="form-control" id="produtoOrigem" name="produtoOrigem">
+          <option selected value="0">Selecione...</option>
+          <option value="1">Loja</option>
+          <option value="2">Doação</option>
+        </select>
+      </div>
+    </div>
+    <div class="mt-4">
+      <a class="btn btn-secondary" href="/produtos">Voltar</a>
+      <button class="btn btn-primary" type="submit">Cadastrar</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/produtos/cadastro.js"></script>
