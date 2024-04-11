@@ -1,7 +1,7 @@
 import express from "express";
 import expressEjsLayout from "express-ejs-layouts";
 import {
-  homeRoute,
+  publicasRoute,
   produtosRoute,
   eventosRoute,
   patrimoniosRoute,
@@ -29,7 +29,7 @@ app.use(
 );
 
 //configura as rotas existentes no nosso sistema
-app.use("/", homeRoute);
+app.use("/", publicasRoute);
 app.use("/produtos", produtosRoute);
 app.use("/eventos", eventosRoute);
 app.use("/patrimonios", patrimoniosRoute);
