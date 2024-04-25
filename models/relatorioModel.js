@@ -52,3 +52,5 @@ class RelatorioModel {
     };
   }
 }
+
+export default RelatorioModel
