@@ -9,10 +9,10 @@ class Database {
     constructor() {
 
         this.#conexao = createPool({
-            host: '164.152.46.60', //endereço do nosso banco de dados na nuvem
-            database: 'ong_database', //a database de cada um de vocês possui a nomenclatura DB_(RA)
-            user: 'fmignone', // usuario e senha de cada um de vocês é o RA
-            password: 'DB@Felipe123',
+            host: '132.226.245.178', //endereço do nosso banco de dados na nuvem
+            database: 'PFS1_10442312344', //a database de cada um de vocês possui a nomenclatura DB_(RA)
+            user: '10442312344', // usuario e senha de cada um de vocês é o RA
+            password: '10442312344',
         });
     }
 

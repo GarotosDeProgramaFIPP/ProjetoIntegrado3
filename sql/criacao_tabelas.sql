@@ -1,19 +1,25 @@
-create table tb_perfis (
-	PerfilId int not null auto_increment,
-    PerfilNome varchar(20) not null,
-    primary key (PerfilId)
-);
-
-create table tb_usuarios (
+create table tb_usuarios_pf (
 	UsuarioId int not null auto_increment,
-    PerfilId int not null,
     UsuarioNome varchar(50) not null,
     UsuarioLogin varchar(30) not null,
     UsuarioSenha varchar(30) not null,
     UsuarioTelefone varchar(15),
     UsuarioEndereco varchar(200),
+    UsuarioAdministrador boolean,
+    UsuarioVoluntario boolean,
+    UsuarioDocumento varchar(50) not null,
     primary key (UsuarioId),
-    foreign key (PerfilId) references tb_perfis (PerfilId)
+);
+
+create table tb_usuarios_pj (
+	UsuarioId int not null auto_increment,
+    UsuarioNome varchar(50) not null,
+    UsuarioLogin varchar(30) not null,
+    UsuarioSenha varchar(30) not null,
+    UsuarioTelefone varchar(15),
+    UsuarioEndereco varchar(200),
+    UsuarioDocumento varchar(50) not null,
+    primary key (UsuarioId),
 );
 
 create table tb_evento_status (
@@ -26,54 +32,44 @@ create table tb_eventos (
 	EventoId int not null auto_increment,
     EventoNome varchar(50) not null,
     EventoData datetime,
-    EventoStatusId int not null,UsuarioId int not null,
-    primary key (EventoId, UsuarioId),
+    EventoStatusId int not null,
+    UsuarioId int not null,
+    PatrimonioId int,
+    primary key (EventoId),
     foreign key (EventoStatusId) references tb_evento_status (EventoStatusId),
-    foreign key (UsuarioId) references tb_usuarios (UsuarioId)
-);
-
-create table tb_setores(
-	SetorId int not null auto_increment,
-    SetorNome varchar(30) not null,
-    primary key (SetorId)
+    foreign key (UsuarioId) references tb_usuarios_pf (UsuarioId)
+    foreign key (PatrimonioId) references tb_patrimonios (PatrimonioId)
 );
 
 create table tb_patrimonios (
 	PatrimonioId int not null auto_increment,
     PatrimonioNome varchar(50)  not null,
+    PatrimonioSetor int,
     primary key (PatrimonioId)
 );
 
-create table tb_alocacao_patrimonios (
-	AlocacaoId int not null auto_increment,
-    AlocacaoData date,
+create table tb_evento_patrimonio (
     PatrimonioId int not null,
-    SetorId int not null,
-    UsuarioId int not null,
-    primary key (AlocacaoId, PatrimonioId, SetorId, UsuarioId),
+    EventoId int not null,
+    primary key (PatrimonioId, EventoId),
     foreign key (PatrimonioId) references tb_patrimonios (PatrimonioId),
-    foreign key (SetorId) references tb_setores (SetorId),
-    foreign key (UsuarioId) references tb_usuarios (UsuarioId)
-);
-
-create table tb_produto_origens (
-	ProdutoOrigemId int not null auto_increment,
-    ProdutoOrigemNome varchar(30),
-    primary key (ProdutoOrigemId)
+    foreign key (EventoId) references tb_eventos (EventoId),
 );
 
 create table tb_produtos (
 	ProdutoId int not null auto_increment,
     ProdutoNome varchar(50) not null,
     ProdutoValor decimal(10, 2),
-    ProdutoOrigemId int not null,
+    ProdutoQuantidade int unsigned,
+    ProdutoOrigem varchar(30) not null,
     primary key (ProdutoId),
-    foreign key (ProdutoOrigemId) references tb_produto_origens (ProdutoOrigemId)
 );
+
+-------------- // -----------------------
 
 create table tb_vendas (
 	VendaId int not null auto_increment,
-    VendaData datetime,
+    VendaData date,
     ProdutoId int not null,
     UsuarioId int not null,
     primary key (VendaId, UsuarioId, ProdutoId),
