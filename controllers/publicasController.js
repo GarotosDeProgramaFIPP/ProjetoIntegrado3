@@ -1,3 +1,5 @@
+import { UsuarioModel } from "../models";
+
 class PublicasController {
   homeView(req, res) {
     res.render("./publicas/home");
@@ -19,6 +21,35 @@ class PublicasController {
   }
   cadastroView(req, res) {
     res.render("./publicas/cadastro");
+  }
+  async realizarLogin(req, res) {
+    const { login, senha, tipo } = req.body;
+    if (login && senha && tipo) {
+      let usuarioModel = new UsuarioModel(
+        null,
+        null,
+        login,
+        senha,
+        null,
+        null,
+        null,
+        null,
+        null
+      );
+
+      let usuario = await usuarioModel.getUsuarioPorLogin(tipo);
+
+      if (usuario) {
+        res.send({ ok: true, message: "Usuário logado com sucesso!" });
+        return;
+      }
+      res.send({ ok: true, message: "Usuário e/ou senha incorreto(s)" });
+    }
+
+    res.send({
+      ok: false,
+      message: "Login, senha e tipo de usuário devem ser preenchidos!",
+    });
   }
 }
 
