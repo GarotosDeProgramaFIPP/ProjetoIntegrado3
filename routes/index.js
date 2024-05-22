@@ -1,6 +1,6 @@
-import homeRoute from "./homeRoute.js";
+import publicasRoute from "./publicasRoute.js";
 import produtosRoute from "./produtosRoute.js";
 import eventosRoute from "./eventosRoute.js";
 import patrimoniosRoute from "./patrimoniosRoute.js";
 
-export { homeRoute, produtosRoute, eventosRoute, patrimoniosRoute };
+export { publicasRoute, produtosRoute, eventosRoute, patrimoniosRoute };

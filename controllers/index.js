@@ -1,10 +1,10 @@
-import HomeController from "./homeController.js";
+import PublicasController from "./publicasController.js";
 import ProdutosController from "./produtosController.js";
 import EventosController from "./eventosController.js";
 import PatrimoniosController from "./patrimoniosController.js";
 
 export {
-  HomeController,
+  PublicasController,
   ProdutosController,
   EventosController,
   PatrimoniosController,
