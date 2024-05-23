@@ -6,6 +6,7 @@ import {
   eventosRoute,
   patrimoniosRoute,
 } from "./routes/index.js";
+import cookieParser from "cookie-parser";
 const app = express();
 
 //configura o ejs como view engine da nossa aplicação
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use(expressEjsLayout);
+app.use(cookieParser());
 
 //gerencia bibliotecas
 app.use("/jquery", express.static("./node_modules/jquery/dist/"));

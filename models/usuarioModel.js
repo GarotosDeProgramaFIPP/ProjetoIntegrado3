@@ -137,14 +137,14 @@ class UsuarioModel {
   }
 
   async getUsuarioPorLogin(userType) {
-    const query = "select * from ? where UsuarioLogin = ? and UsuarioSenha = ?";
-    const values = [
-      userType === "pf" ? "tb_usuarios_pf" : "tb_usuarios_pj",
-      this.#Id,
-      this.#Senha,
-    ];
+    const queryPF = `select * from tb_usuarios_pf where UsuarioLogin = ? and UsuarioSenha = ?`;
+    const queryPJ = `select * from tb_usuarios_pj where UsuarioLogin = ? and UsuarioSenha = ?`;
+    const values = [this.#Login, this.#Senha];
 
-    let rows = await db.ExecutaComando(query, values);
+    let rows = await db.ExecutaComando(
+      userType.toLowerCase() === "pf" ? queryPF : queryPJ,
+      values
+    );
 
     return rows.map(
       (row) =>

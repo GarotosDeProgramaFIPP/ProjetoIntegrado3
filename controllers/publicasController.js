@@ -1,4 +1,4 @@
-import { UsuarioModel } from "../models";
+import { UsuarioModel } from "../models/index.js";
 
 class PublicasController {
   homeView(req, res) {
@@ -23,12 +23,12 @@ class PublicasController {
     res.render("./publicas/cadastro");
   }
   async realizarLogin(req, res) {
-    const { login, senha, tipo } = req.body;
-    if (login && senha && tipo) {
+    const { email, senha, tipo } = req.body;
+    if (email && senha && tipo) {
       let usuarioModel = new UsuarioModel(
         null,
         null,
-        login,
+        email,
         senha,
         null,
         null,
@@ -40,10 +40,14 @@ class PublicasController {
       let usuario = await usuarioModel.getUsuarioPorLogin(tipo);
 
       if (usuario) {
+        
+        res.cookie("usuarioLogado", usuario.Id);
+        
         res.send({ ok: true, message: "Usuário logado com sucesso!" });
         return;
       }
-      res.send({ ok: true, message: "Usuário e/ou senha incorreto(s)" });
+      res.send({ ok: false, message: "Usuário e/ou senha incorreto(s)" });
+      return;
     }
 
     res.send({
