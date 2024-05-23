@@ -14,16 +14,13 @@ router.get(
   auth.verificarUsuarioAdministrador,
   ctrl.cadastrarView
 );
-router.get(
-  "/alocar",
-  auth.verificarUsuarioAdministrador,
-  ctrl.alocarView
-);
+router.get("/alocar", auth.verificarUsuarioAdministrador, ctrl.alocarView);
 //mothods routes
 router.get("/all", ctrl.getTodosPatrimonios);
 router.get("/:id", ctrl.getPatrimonioPorId);
 router.post("/", ctrl.addNovoPatrimonio);
 router.put("/:id", ctrl.editarPatrimonio);
 router.delete("/:id", ctrl.deletePatrimonio);
+router.post("/alocar", ctrl.alocarPatrimonio);
 
 export default router;

@@ -99,6 +99,28 @@ class PatrimonioModel {
     return isUpdated;
   }
 
+  async alocarPatrimonio(patrimonioId, eventoId) {
+    const queryUpdatePatrimonio =
+      "update tb_patrimonios set PatrimonioAlocado = true where PatrimonioId = ?";
+    const valuesUpdatePatrimonio = [patrimonioId];
+
+    let isUpdated = await db.ExecutaComandoNonQuery(
+      queryUpdatePatrimonio,
+      valuesUpdatePatrimonio
+    );
+
+    const queryAddAlocacao =
+      "insert into tb_evento_patrimonio (PatrimonioId, EventoId) values (?, ?)";
+    const valuesAddAlocacao = [patrimonioId, eventoId];
+
+    let isAdded = await db.ExecutaComandoNonQuery(
+      queryAddAlocacao,
+      valuesAddAlocacao
+    );
+
+    return isUpdated && isAdded;
+  }
+
   toJSON() {
     return {
       id: this.#Id,

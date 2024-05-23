@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
       evento,
     };
 
-    if (validaFormulario(nome)) {
+    if (validaFormulario(patrimonio, evento)) {
       fetch(`/patrimonios/alocar`, {
         method: "post",
         body: JSON.stringify(body),
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     }
   });
-});
 
-const validaFormulario = (patrimonio, evento) => {
-  return patrimonio && evento;
-};
+  const validaFormulario = (patrimonio, evento) => {
+    return patrimonio !== "0" && evento !== "0";
+  };
+});

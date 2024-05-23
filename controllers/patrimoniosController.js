@@ -17,9 +17,7 @@ class PatrimoniosController {
 
     const patrimoniosDisponiveis = await patriModel
       .getTodosPatrimonios()
-      .then((r) =>
-        r.filter((patrimonio) => !Boolean(patrimonio.Alocado))
-      );
+      .then((r) => r.filter((patrimonio) => !Boolean(patrimonio.Alocado)));
 
     const eventosNaoFinalizados = await evenModel
       .getTodosEventos()
@@ -122,6 +120,32 @@ class PatrimoniosController {
     res.send({
       ok: false,
       message: "Não foi possível excluir patrimonio",
+    });
+  }
+
+  async alocarPatrimonio(req, res) {
+    const { patrimonio, evento } = req.body;
+
+    if (patrimonio !== "0" && evento !== "0") {
+      let patriModel = new PatrimonioModel();
+      let isAlocated = await patriModel.alocarPatrimonio(patrimonio, evento);
+
+      if (isAlocated) {
+        res.send({
+          ok: true,
+          message: "Patrimonio alocado ao evento com sucesso!",
+        });
+        return;
+      }
+      res.send({
+        ok: false,
+        message: "Não foi possível alocar patrimonio ao evento!",
+      });
+      return;
+    }
+    res.send({
+      ok: false,
+      message: "Patrimonio e Evento obrigatórios para alocação!",
     });
   }
 }
