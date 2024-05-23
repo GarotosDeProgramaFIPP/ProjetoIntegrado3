@@ -90,9 +90,9 @@ class PatrimonioModel {
 
   async updatePatrimonioPorId() {
     const query =
-      "update tb_patrimonios set PatrimonioNome = ?, PatrimonioAlocado = ? where PatrimonioId = ?";
+      "update tb_patrimonios set PatrimonioNome = ? where PatrimonioId = ?";
 
-    const values = [this.#Nome, this.#Alocado, this.#Id];
+    const values = [this.#Nome, this.#Id];
 
     let isUpdated = await db.ExecutaComandoNonQuery(query, values);
 

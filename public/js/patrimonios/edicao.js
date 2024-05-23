@@ -9,17 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
       let { nome, alocado } = r.data;
       console.log({ nome, alocado });
       $("#patrimonioNome").val(nome);
-      $("#patrimonioAlocado").attr("checked", Boolean(alocado));
     });
 
   $("#patrimonio-form").on("submit", function (e) {
     e.preventDefault();
     const nome = $("#patrimonioNome").val();
-    const alocado = $("#patrimonioAlocado").is(":checked");
 
     const body = {
       nome,
-      alocado,
     };
 
     if (validaFormulario(nome)) {
