@@ -37,6 +37,25 @@ class PatrimonioModel {
     this.#Alocado = value;
   }
 
+  async getTodosPatrimoniosENomeDeEventos() {
+    const query = `
+      select PEP.PatrimonioId, PEP.PatrimonioNome, E.EventoNome 
+      from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
+	    left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
+      left join tb_eventos as E on PEP.EventoId = E.EventoId;
+    `;
+    let rows = await db.ExecutaComando(query);
+
+    return rows.map(
+      (row) =>
+        new PatrimonioModel(
+          row.PatrimonioId,
+          row.PatrimonioNome,
+          row.EventoNome
+        )
+    );
+  }
+
   async getTodosPatrimonios() {
     const query = "select * from tb_patrimonios";
 

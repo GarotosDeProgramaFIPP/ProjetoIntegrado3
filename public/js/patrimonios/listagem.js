@@ -11,12 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
         r.data.forEach((patrimonio) => {
           $("#table-patrimonios-body").append(`
             <tr>
-              <td>
+              <td class="text-start">
                 <span>${patrimonio.nome}</span>
               </td>
               <td>
                 <div class='d-flex justify-content-between'>
-                  <span>${patrimonio.alocado ? "SIM" : "NÃO"}</span>
+                  <span>${
+                    patrimonio.alocado ? patrimonio.alocado : "Não alocado"
+                  }</span>
                   <span>
                     <a href="/patrimonios/editar/${
                       patrimonio.id
