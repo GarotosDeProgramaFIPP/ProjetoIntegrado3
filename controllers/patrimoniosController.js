@@ -1,4 +1,4 @@
-import { PatrimonioModel } from "../models/index.js";
+import { EventoModel, PatrimonioModel } from "../models/index.js";
 
 class PatrimoniosController {
   //Views
@@ -10,6 +10,25 @@ class PatrimoniosController {
   }
   editarView(req, res) {
     res.render("./patrimonios/edicao");
+  }
+  async alocarView(req, res) {
+    let patriModel = new PatrimonioModel();
+    let evenModel = new EventoModel();
+
+    const patrimoniosDisponiveis = await patriModel
+      .getTodosPatrimonios()
+      .then((r) =>
+        r.filter((patrimonio) => !Boolean(patrimonio.Alocado))
+      );
+
+    const eventosNaoFinalizados = await evenModel
+      .getTodosEventos()
+      .then((r) => r.filter((evento) => evento.StatusNome !== "Finalizado"));
+
+    res.render("./patrimonios/alocacao", {
+      patrimonios: patrimoniosDisponiveis,
+      eventos: eventosNaoFinalizados,
+    });
   }
 
   //Methods

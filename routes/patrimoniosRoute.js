@@ -14,6 +14,11 @@ router.get(
   auth.verificarUsuarioAdministrador,
   ctrl.cadastrarView
 );
+router.get(
+  "/alocar",
+  auth.verificarUsuarioAdministrador,
+  ctrl.alocarView
+);
 //mothods routes
 router.get("/all", ctrl.getTodosPatrimonios);
 router.get("/:id", ctrl.getPatrimonioPorId);

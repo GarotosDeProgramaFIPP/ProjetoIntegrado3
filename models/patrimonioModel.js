@@ -13,27 +13,27 @@ class PatrimonioModel {
     this.#Alocado = alocado;
   }
 
-  get id() {
+  get Id() {
     return this.#Id;
   }
 
-  set id(newId) {
+  set Id(newId) {
     this.#Id = newId;
   }
 
-  get nome() {
+  get Nome() {
     return this.#Nome;
   }
 
-  set nome(newNome) {
+  set Nome(newNome) {
     this.#Nome = newNome;
   }
 
-  get alocado() {
+  get Alocado() {
     return this.#Alocado;
   }
 
-  set alocado(value) {
+  set Alocado(value) {
     this.#Alocado = value;
   }
 
