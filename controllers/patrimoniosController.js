@@ -32,7 +32,7 @@ class PatrimoniosController {
   //Methods
   async getTodosPatrimonios(req, res) {
     let patriModel = new PatrimonioModel();
-    let patrimonios = await patriModel.getTodosPatrimonios();
+    let patrimonios = await patriModel.getTodosPatrimoniosENomeDeEventos();
 
     if (patrimonios && patrimonios.length) {
       res.send({
