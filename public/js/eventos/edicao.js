@@ -6,12 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
   })
     .then((r) => r.json())
     .then((r) => {
-      let { nome, data, statusId, usuarioId } = r.data;
+      let { nome, data, statusId } = r.data;
       const formatedData = new Date(data).toISOString().split("T")[0];
       $("#eventoNome").val(nome);
       $("#eventoData").val(formatedData);
       $("#eventoStatusId").val(statusId);
-      $("#eventoUsuarioId").val(usuarioId);
     });
 
   $("#evento-form").on("submit", function (e) {
@@ -19,16 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const nome = $("#eventoNome").val();
     const data = $("#eventoData").val();
     const statusId = $("#eventoStatusId").val();
-    const usuarioId = $("#eventoUsuarioId").val();
 
     const body = {
       nome,
       data,
       statusId,
-      usuarioId,
     };
 
-    if (validaFormulario(nome, data, statusId, usuarioId)) {
+    if (validaFormulario(nome, data, statusId)) {
       fetch(`/eventos/${evenId}`, {
         method: "put",
         body: JSON.stringify(body),
@@ -47,6 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-const validaFormulario = (nome, data, statusId, usuarioId) => {
-  return nome && data && statusId && usuarioId;
+const validaFormulario = (nome, data, statusId) => {
+  return nome && data && statusId;
 };

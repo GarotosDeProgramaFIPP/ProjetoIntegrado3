@@ -5,11 +5,15 @@ class EventosController {
   listagemView(req, res) {
     res.render("./eventos/listagem");
   }
-  cadastrarView(req, res) {
-    res.render("./eventos/cadastro");
+  async cadastrarView(req, res) {
+    let evenModel = new EventoModel();
+    let eventoStatus = await evenModel.getEventoStatus();
+    res.render("./eventos/cadastro", { eventoStatus });
   }
-  editarView(req, res) {
-    res.render("./eventos/edicao");
+  async editarView(req, res) {
+    let evenModel = new EventoModel();
+    let eventoStatus = await evenModel.getEventoStatus();
+    res.render("./eventos/edicao", { eventoStatus });
   }
 
   //Methods
@@ -52,8 +56,8 @@ class EventosController {
   }
 
   async addNovoEvento(req, res) {
-    const { nome, data, statusId, usuarioId } = req.body;
-    let evenModel = new EventoModel(null, nome, data, statusId, usuarioId);
+    const { nome, data, statusId } = req.body;
+    let evenModel = new EventoModel(null, nome, data, statusId);
     let isCreated = await evenModel.addNovoEvento();
 
     if (isCreated) {
@@ -70,9 +74,9 @@ class EventosController {
   }
 
   async editarEvento(req, res) {
-    const { nome, data, statusId, usuarioId } = req.body;
+    const { nome, data, statusId } = req.body;
     const id = req.params.id;
-    let evenModel = new EventoModel(id, nome, data, statusId, usuarioId);
+    let evenModel = new EventoModel(id, nome, data, statusId);
     let isUpdated = await evenModel.updateEventoPorId();
 
     if (isUpdated) {

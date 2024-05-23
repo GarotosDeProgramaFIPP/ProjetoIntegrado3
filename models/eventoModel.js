@@ -7,14 +7,14 @@ class EventoModel {
   #Nome;
   #Data;
   #StatusId;
-  #UsuarioId;
+  #StatusNome;
 
-  constructor(id, nome, data, statusId, usuarioId) {
+  constructor(id, nome, data, statusId, statusNome) {
     this.#Id = id;
     this.#Nome = nome;
     this.#Data = data;
     this.#StatusId = statusId;
-    this.#UsuarioId = usuarioId;
+    this.#StatusNome = statusNome;
   }
 
   get Id() {
@@ -49,16 +49,17 @@ class EventoModel {
     this.#StatusId = statusId;
   }
 
-  get UsuarioId() {
-    return this.#UsuarioId;
+  get StatusNome() {
+    return this.#StatusNome;
   }
 
-  set UsuarioId(usuarioId) {
-    this.#UsuarioId = usuarioId;
+  set StatusNome(statusNome) {
+    this.#StatusNome = statusNome;
   }
 
   async getTodosEventos() {
-    const query = "select * from tb_eventos";
+    const query =
+      "select E.*, S.EventoStatusDescricao from tb_eventos as E inner join tb_evento_status as S on E.EventoStatusId = S.EventoStatusId";
 
     let rows = await db.ExecutaComando(query);
 
@@ -69,7 +70,7 @@ class EventoModel {
           row.EventoNome,
           row.EventoData,
           row.EventoStatusId,
-          row.UsuarioId
+          row.EventoStatusDescricao
         )
     );
   }
@@ -86,17 +87,16 @@ class EventoModel {
           row.EventoId,
           row.EventoNome,
           row.EventoData,
-          row.EventoStatusId,
-          row.UsuarioId
+          row.EventoStatusId
         )
     )[0];
   }
 
   async addNovoEvento() {
     const query =
-      "insert into tb_eventos set EventoNome = ?, EventoData = ?, EventoStatusId = ?, UsuarioId = ?";
+      "insert into tb_eventos set EventoNome = ?, EventoData = ?, EventoStatusId = ?";
 
-    const values = [this.#Nome, this.#Data, this.#StatusId, this.#UsuarioId];
+    const values = [this.#Nome, this.#Data, this.#StatusId];
 
     let isAdded = await db.ExecutaComandoNonQuery(query, values);
 
@@ -114,13 +114,24 @@ class EventoModel {
 
   async updateEventoPorId() {
     const query =
-      "update tb_eventos set EventoNome = ?, EventoData = ?, EventoStatusId = ?, UsuarioId = ?";
+      "update tb_eventos set EventoNome = ?, EventoData = ?, EventoStatusId = ? where EventoId = ?";
 
-    const values = [this.#Nome, this.#Data, this.#StatusId, this.#UsuarioId];
+    const values = [this.#Nome, this.#Data, this.#StatusId, this.#Id];
 
     let isUpdated = await db.ExecutaComandoNonQuery(query, values);
 
     return isUpdated;
+  }
+
+  async getEventoStatus() {
+    const query = "select * from tb_evento_status";
+
+    let rows = await db.ExecutaComando(query);
+
+    return rows.map((row) => ({
+      eventoStatusId: row.EventoStatusId,
+      eventoStatusDescricao: row.EventoStatusDescricao,
+    }));
   }
 
   toJSON() {
@@ -129,7 +140,7 @@ class EventoModel {
       nome: this.#Nome,
       data: this.#Data,
       statusId: this.#StatusId,
-      usuarioId: this.#UsuarioId,
+      statusNome: this.#StatusNome,
     };
   }
 }

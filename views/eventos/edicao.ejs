@@ -34,22 +34,11 @@
             name="eventoStatusId"
           >
             <option selected value="0">Selecione...</option>
-            <option value="1">Não iniciado</option>
-            <option value="2">Em andamento</option>
-            <option value="2">Finalizado</option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <div class="form-group">
-          <label for="eventoUsuarioId" class="form-label">Usuario:</label>
-          <select
-            class="form-control"
-            id="eventoUsuarioId"
-            name="eventoUsuarioId"
-          >
-            <option selected value="0">Selecione...</option>
-            <option value="1">Felipe Mignone</option>
+            <% eventoStatus.forEach(status => { %>
+            <option value="<%= status.eventoStatusId %>">
+              <%= status.eventoStatusDescricao %>
+            </option>
+            <% }) %>
           </select>
         </div>
       </div>
