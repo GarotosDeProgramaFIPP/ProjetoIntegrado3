@@ -6,16 +6,20 @@ document.addEventListener("DOMContentLoaded", function () {
   })
     .then((r) => r.json())
     .then((r) => {
-      let { nome } = r.data;
+      let { nome, alocado } = r.data;
+      console.log({ nome, alocado });
       $("#patrimonioNome").val(nome);
+      $("#patrimonioAlocado").attr("checked", Boolean(alocado));
     });
 
   $("#patrimonio-form").on("submit", function (e) {
     e.preventDefault();
     const nome = $("#patrimonioNome").val();
+    const alocado = $("#patrimonioAlocado").is(":checked");
 
     const body = {
       nome,
+      alocado,
     };
 
     if (validaFormulario(nome)) {

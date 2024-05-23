@@ -70,9 +70,9 @@ class PatrimoniosController {
   }
 
   async editarPatrimonio(req, res) {
-    const { nome } = req.body;
+    const { nome, alocado } = req.body;
     const id = req.params.id;
-    let patriModel = new PatrimonioModel(id, nome);
+    let patriModel = new PatrimonioModel(id, nome, alocado);
     let isUpdated = await patriModel.updatePatrimonioPorId();
 
     if (isUpdated) {

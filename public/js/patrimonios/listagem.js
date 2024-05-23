@@ -12,11 +12,18 @@ document.addEventListener("DOMContentLoaded", function () {
           $("#table-patrimonios-body").append(`
             <tr>
               <td>
+                <span>${patrimonio.nome}</span>
+              </td>
+              <td>
                 <div class='d-flex justify-content-between'>
-                  <span>${patrimonio.nome}</span>
+                  <span>${patrimonio.alocado ? "SIM" : "NÃO"}</span>
                   <span>
-                    <a href="/patrimonios/editar/${patrimonio.id}" class="btn btn-primary" style="font-size: 12px"><i class="fas fa-pen"></i></a>
-                    <button class="btn btn-primary" onclick="openDeleteModal(${patrimonio.id})" style="font-size: 12px; background-color: red; border-color:red">
+                    <a href="/patrimonios/editar/${
+                      patrimonio.id
+                    }" class="btn btn-primary" style="font-size: 12px"><i class="fas fa-pen"></i></a>
+                    <button class="btn btn-primary" onclick="openDeleteModal(${
+                      patrimonio.id
+                    })" style="font-size: 12px; background-color: red; border-color:red">
                       <i class="fas fa-trash"></i>
                     </button>
                   </span>
