@@ -8,13 +8,9 @@ class AuthMiddleware {
       usuario = await usuario.getUsuarioPorId();
       if (usuario) {
         res.locals.usuarioLogado = usuario;
-        next();
-      } else {
-        res.redirect("/login");
       }
-    } else {
-      res.redirect("/login");
     }
+    next();
   }
 
   async verificarUsuarioAdministrador(req, res, next) {
