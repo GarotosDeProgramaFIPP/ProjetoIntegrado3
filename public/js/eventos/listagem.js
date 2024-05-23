@@ -16,10 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 "pt-BR",
                 { timeZone: "UTC" }
               )}</td>
-              <td class="text-start">${evento.statusId}</td>
               <td>
                 <div class='d-flex justify-content-between'>
-                  <span>${evento.usuarioId}</span>
+                  <span>${evento.statusNome}</span>
                   <span>
                     <a href="/eventos/editar/${
                       evento.id

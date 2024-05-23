@@ -8,7 +8,7 @@ create table tb_usuarios_pf (
     UsuarioAdministrador boolean,
     UsuarioVoluntario boolean,
     UsuarioDocumento varchar(50) not null,
-    primary key (UsuarioId),
+    primary key (UsuarioId)
 );
 
 create table tb_usuarios_pj (
@@ -19,7 +19,7 @@ create table tb_usuarios_pj (
     UsuarioTelefone varchar(15),
     UsuarioEndereco varchar(200),
     UsuarioDocumento varchar(50) not null,
-    primary key (UsuarioId),
+    primary key (UsuarioId)
 );
 
 create table tb_evento_status (
@@ -33,18 +33,14 @@ create table tb_eventos (
     EventoNome varchar(50) not null,
     EventoData datetime,
     EventoStatusId int not null,
-    UsuarioId int not null,
-    PatrimonioId int,
     primary key (EventoId),
-    foreign key (EventoStatusId) references tb_evento_status (EventoStatusId),
-    foreign key (UsuarioId) references tb_usuarios_pf (UsuarioId)
-    foreign key (PatrimonioId) references tb_patrimonios (PatrimonioId)
+    foreign key (EventoStatusId) references tb_evento_status (EventoStatusId)
 );
 
 create table tb_patrimonios (
 	PatrimonioId int not null auto_increment,
     PatrimonioNome varchar(50)  not null,
-    PatrimonioSetor int,
+    PatrimonioAlocado boolean,
     primary key (PatrimonioId)
 );
 
@@ -53,7 +49,7 @@ create table tb_evento_patrimonio (
     EventoId int not null,
     primary key (PatrimonioId, EventoId),
     foreign key (PatrimonioId) references tb_patrimonios (PatrimonioId),
-    foreign key (EventoId) references tb_eventos (EventoId),
+    foreign key (EventoId) references tb_eventos (EventoId)
 );
 
 create table tb_produtos (
@@ -62,7 +58,7 @@ create table tb_produtos (
     ProdutoValor decimal(10, 2),
     ProdutoQuantidade int unsigned,
     ProdutoOrigem varchar(30) not null,
-    primary key (ProdutoId),
+    primary key (ProdutoId)
 );
 
 -------------- // -----------------------

@@ -4,16 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const nome = $("#eventoNome").val();
     const data = $("#eventoData").val();
     const statusId = $("#eventoStatusId").val();
-    const usuarioId = $("#eventoUsuarioId").val();
 
     const body = {
       nome,
       data,
       statusId,
-      usuarioId,
     };
 
-    if (validaFormulario(nome, data, statusId, usuarioId)) {
+    if (validaFormulario(nome, data, statusId)) {
       fetch("/eventos", {
         method: "post",
         body: JSON.stringify(body),
@@ -32,6 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-const validaFormulario = (nome, data, statusId, usuarioId) => {
-  return nome && data && statusId && usuarioId;
+const validaFormulario = (nome, data, statusId) => {
+  return nome && data && statusId;
 };

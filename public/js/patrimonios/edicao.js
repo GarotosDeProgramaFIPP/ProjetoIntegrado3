@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   })
     .then((r) => r.json())
     .then((r) => {
-      let { nome } = r.data;
+      let { nome, alocado } = r.data;
+      console.log({ nome, alocado });
       $("#patrimonioNome").val(nome);
     });
 

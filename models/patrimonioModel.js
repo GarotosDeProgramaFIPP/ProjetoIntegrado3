@@ -5,10 +5,12 @@ let db = new DataBase();
 class PatrimonioModel {
   #Id;
   #Nome;
+  #Alocado;
 
-  constructor(id, nome) {
+  constructor(id, nome, alocado) {
     this.#Id = id;
     this.#Nome = nome;
+    this.#Alocado = alocado;
   }
 
   get id() {
@@ -27,13 +29,26 @@ class PatrimonioModel {
     this.#Nome = newNome;
   }
 
+  get alocado() {
+    return this.#Alocado;
+  }
+
+  set alocado(value) {
+    this.#Alocado = value;
+  }
+
   async getTodosPatrimonios() {
     const query = "select * from tb_patrimonios";
 
     let rows = await db.ExecutaComando(query);
 
     return rows.map(
-      (row) => new PatrimonioModel(row.PatrimonioId, row.PatrimonioNome)
+      (row) =>
+        new PatrimonioModel(
+          row.PatrimonioId,
+          row.PatrimonioNome,
+          row.PatrimonioAlocado
+        )
     );
   }
 
@@ -44,12 +59,18 @@ class PatrimonioModel {
     let rows = await db.ExecutaComando(query, values);
 
     return rows.map(
-      (row) => new PatrimonioModel(row.PatrimonioId, row.PatrimonioNome)
+      (row) =>
+        new PatrimonioModel(
+          row.PatrimonioId,
+          row.PatrimonioNome,
+          row.PatrimonioAlocado
+        )
     )[0];
   }
 
   async addNovoPatrimonio() {
-    const query = "insert into tb_patrimonios set PatrimonioNome = ?";
+    const query =
+      "insert into tb_patrimonios (PatrimonioNome, PatrimonioAlocado) values (?, false)";
 
     const values = [this.#Nome];
 
@@ -82,6 +103,7 @@ class PatrimonioModel {
     return {
       id: this.#Id,
       nome: this.#Nome,
+      alocado: this.#Alocado,
     };
   }
 }
