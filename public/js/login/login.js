@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-  $("#login-button").on("click", function () {
-    console.log("chamou");
+  $("input").on("focus", function () {
+    $(this).css("border-color", "#dee2e6");
+    $("#error-message").css("display", "none");
+  });
 
+  $("#login-button").on("click", function () {
     let email = $("#email-input").val();
     let senha = $("#senha-input").val();
     let tipo = $('input[name="tipo-radio"]:checked').val();
-
-    console.log({ email, senha, tipo });
 
     const payload = { email, senha, tipo };
 
@@ -20,6 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((r) => {
           if (r.ok) {
             window.location.href = "/";
+          } else {
+            $("#error-message").css("display", "flex");
+            $("#error-message").text(r.message);
           }
         });
     }
@@ -27,5 +31,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function validaCampos(email, senha, tipo) {
-  return email && senha && tipo;
+  let inputsComErro = [];
+  if (!email) {
+    inputsComErro.push("#email-input");
+  }
+  if (!senha) {
+    inputsComErro.push("#senha-input");
+  }
+
+  if (inputsComErro.length) {
+    inputsComErro.map((input) => {
+      $(input).css("border-color", "red");
+    });
+    $("#error-message").css("display", "flex");
+    $("#error-message").text("Preencha os campos corretamente!");
+    return false;
+  }
+  return true;
 }
