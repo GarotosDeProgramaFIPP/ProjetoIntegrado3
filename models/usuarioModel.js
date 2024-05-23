@@ -116,6 +116,7 @@ class UsuarioModel {
 
   async getUsuarioPorId() {
     const query = "select * from tb_usuarios_pf where UsuarioId = ?";
+    //TODO: diferenciar pf de pj
     const values = [this.#Id];
 
     let rows = await db.ExecutaComando(query, values);
