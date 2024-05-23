@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/fontawesome-free/css/all.min.css" />
 
     <!--CSS feitos na mao-->
-    <link rel="stylesheet" href="/css/cadastro.css">
+    <link rel="stylesheet" href="/css/cadastro.css" />
     <!--CSS feitos na mao-->
 
     <!-- bootstrap css-->
@@ -40,11 +40,25 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="/">Início</a></li>
+            <% if (locals?.usuarioLogado?.Administrador) { %>
+            <li><div class="menu-separator"></div></li>
+            <li><a href="/eventos">Eventos</a></li>
+            <li><a href="/patrimonios">Patrimonios</a></li>
+            <li><a href="/produtos">Produtos</a></li>
+            <li><div class="menu-separator"></div></li>
+            <% } %>
             <li><a href="/causas">Causas</a></li>
             <li><a href="/ajude">Ajude também</a></li>
             <li><a href="/doacao">Doar</a></li>
             <li><a href="/contato">Contato</a></li>
-            <li><a href="/login">Entrar</a></li>
+            <li><div class="menu-separator"></div></li>
+            <li>
+              <% if (locals?.usuarioLogado) { %>
+              <a onclick="logout()" href="">Sair</a>
+              <% } else { %>
+              <a href="/login">Entrar</a>
+              <% } %>
+            </li>
           </ul>
         </nav>
 
@@ -78,7 +92,6 @@
               <li><a href="/ajude">Ajude também</a></li>
               <li><a href="/doacao">Doar</a></li>
               <li><a href="/contato">Contato</a></li>
-              <li><a href="/login">Entrar</a></li>
             </ul>
           </div>
 

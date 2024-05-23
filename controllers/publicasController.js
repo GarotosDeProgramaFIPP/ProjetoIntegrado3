@@ -40,9 +40,8 @@ class PublicasController {
       let usuario = await usuarioModel.getUsuarioPorLogin(tipo);
 
       if (usuario) {
-        
         res.cookie("usuarioLogado", usuario.Id);
-        
+
         res.send({ ok: true, message: "Usuário logado com sucesso!" });
         return;
       }
@@ -54,6 +53,10 @@ class PublicasController {
       ok: false,
       message: "Login, senha e tipo de usuário devem ser preenchidos!",
     });
+  }
+  logout(req, res) {
+    res.clearCookie("usuarioLogado");
+    res.send({ ok: true, message: "Usuário deslogado com sucesso!" });
   }
 }
 

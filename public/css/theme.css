@@ -50,6 +50,12 @@ h6 {
   font-family: var(--font-primary);
 }
 
+.menu-separator {
+  height: 2px;
+  width: 100%;
+  background-color: #ffffff99;
+}
+
 section {
   padding: 60px 0;
   overflow: hidden;
@@ -285,7 +291,7 @@ section {
 }
 
 .header .logo h1 {
-  font-size: 30px;
+  font-size: 24px;
   margin: 0;
   font-weight: 600;
   letter-spacing: 0.8px;
@@ -308,6 +314,11 @@ section {
 @media (min-width: 1280px) {
   .navbar {
     padding: 0;
+  }
+
+  .menu-separator {
+    width: 2px;
+    height: 14px;
   }
 
   .navbar ul {
