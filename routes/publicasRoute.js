@@ -10,5 +10,6 @@ router.get("/doacao", ctrl.doacaoView);
 router.get("/contato", ctrl.contatoView);
 router.get("/login", ctrl.loginView);
 router.get("/cadastro", ctrl.cadastroView);
+router.post("/login", ctrl.realizarLogin);
 
 export default router;
