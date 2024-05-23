@@ -13,27 +13,27 @@ class PatrimonioModel {
     this.#Alocado = alocado;
   }
 
-  get id() {
+  get Id() {
     return this.#Id;
   }
 
-  set id(newId) {
+  set Id(newId) {
     this.#Id = newId;
   }
 
-  get nome() {
+  get Nome() {
     return this.#Nome;
   }
 
-  set nome(newNome) {
+  set Nome(newNome) {
     this.#Nome = newNome;
   }
 
-  get alocado() {
+  get Alocado() {
     return this.#Alocado;
   }
 
-  set alocado(value) {
+  set Alocado(value) {
     this.#Alocado = value;
   }
 
@@ -97,6 +97,28 @@ class PatrimonioModel {
     let isUpdated = await db.ExecutaComandoNonQuery(query, values);
 
     return isUpdated;
+  }
+
+  async alocarPatrimonio(patrimonioId, eventoId) {
+    const queryUpdatePatrimonio =
+      "update tb_patrimonios set PatrimonioAlocado = true where PatrimonioId = ?";
+    const valuesUpdatePatrimonio = [patrimonioId];
+
+    let isUpdated = await db.ExecutaComandoNonQuery(
+      queryUpdatePatrimonio,
+      valuesUpdatePatrimonio
+    );
+
+    const queryAddAlocacao =
+      "insert into tb_evento_patrimonio (PatrimonioId, EventoId) values (?, ?)";
+    const valuesAddAlocacao = [patrimonioId, eventoId];
+
+    let isAdded = await db.ExecutaComandoNonQuery(
+      queryAddAlocacao,
+      valuesAddAlocacao
+    );
+
+    return isUpdated && isAdded;
   }
 
   toJSON() {

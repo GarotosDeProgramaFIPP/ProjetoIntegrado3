@@ -1,4 +1,4 @@
-import { PatrimonioModel } from "../models/index.js";
+import { EventoModel, PatrimonioModel } from "../models/index.js";
 
 class PatrimoniosController {
   //Views
@@ -10,6 +10,23 @@ class PatrimoniosController {
   }
   editarView(req, res) {
     res.render("./patrimonios/edicao");
+  }
+  async alocarView(req, res) {
+    let patriModel = new PatrimonioModel();
+    let evenModel = new EventoModel();
+
+    const patrimoniosDisponiveis = await patriModel
+      .getTodosPatrimonios()
+      .then((r) => r.filter((patrimonio) => !Boolean(patrimonio.Alocado)));
+
+    const eventosNaoFinalizados = await evenModel
+      .getTodosEventos()
+      .then((r) => r.filter((evento) => evento.StatusNome !== "Finalizado"));
+
+    res.render("./patrimonios/alocacao", {
+      patrimonios: patrimoniosDisponiveis,
+      eventos: eventosNaoFinalizados,
+    });
   }
 
   //Methods
@@ -103,6 +120,32 @@ class PatrimoniosController {
     res.send({
       ok: false,
       message: "Não foi possível excluir patrimonio",
+    });
+  }
+
+  async alocarPatrimonio(req, res) {
+    const { patrimonio, evento } = req.body;
+
+    if (patrimonio !== "0" && evento !== "0") {
+      let patriModel = new PatrimonioModel();
+      let isAlocated = await patriModel.alocarPatrimonio(patrimonio, evento);
+
+      if (isAlocated) {
+        res.send({
+          ok: true,
+          message: "Patrimonio alocado ao evento com sucesso!",
+        });
+        return;
+      }
+      res.send({
+        ok: false,
+        message: "Não foi possível alocar patrimonio ao evento!",
+      });
+      return;
+    }
+    res.send({
+      ok: false,
+      message: "Patrimonio e Evento obrigatórios para alocação!",
     });
   }
 }
