@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const patriId = window.location.href.split("/").pop();
 
+  $("input").on("focus", function () {
+    $(this).css("border-color", "#dee2e6");
+    $("p", $(this).parent()).remove();
+  });
+
   fetch(`/patrimonios/${patriId}`, {
     method: "get",
   })
@@ -13,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $("#patrimonio-form").on("submit", function (e) {
     e.preventDefault();
+    $("p.text-danger").remove();
     const nome = $("#patrimonioNome").val();
 
     const body = {
@@ -39,5 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const validaFormulario = (nome) => {
-  return Boolean(nome);
+  if (!Boolean(nome)) {
+    let inputElement = $("#patrimonioNome");
+    inputElement.css("border-color", "red");
+    inputElement
+      .parent()
+      .append(`<p class="text-danger">Campo obrigatório</p>`);
+    return false;
+  }
+  return true;
 };
