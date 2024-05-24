@@ -40,7 +40,7 @@ function validaCampos(email, senha, tipo) {
   }
 
   if (inputsComErro.length) {
-    inputsComErro.map((input) => {
+    inputsComErro.forEach((input) => {
       $(input).css("border-color", "red");
     });
     $("#error-message").css("display", "flex");
