@@ -107,13 +107,59 @@ class PatrimonioModel {
     return isDeleted;
   }
 
-  async updatePatrimonioPorId() {
+  async updatePatrimonioPorId(eventoId) {
+    if (this.#Alocado && eventoId) {
+      // Remove alocação
+      if (eventoId === "0") {
+        //Deleta relacionamento entre o patrimonio e evento
+        const queryDeletarRelacionamento =
+          "delete from tb_evento_patrimonio where PatrimonioId = ?";
+        const valuesDeletarRelacionamento = [this.#Id];
+        const isDeleted = await db.ExecutaComandoNonQuery(
+          queryDeletarRelacionamento,
+          valuesDeletarRelacionamento
+        );
+
+        //Atualiza nome e status de alocação do patrimonio
+        const queryAtualizaPatrimonio =
+          "update tb_patrimonios set PatrimonioNome = ?, PatrimonioAlocado = false where PatrimonioId = ?";
+        const valuesAtualizaPatrimonio = [this.#Nome, this.#Id];
+        const isUpdated = db.ExecutaComandoNonQuery(
+          queryAtualizaPatrimonio,
+          valuesAtualizaPatrimonio
+        );
+
+        return isDeleted && isUpdated;
+      }
+
+      //Atualiza alocação
+      //Atualiza relacionamento entre o patrimonio e evento
+      const queryAtualizarRelacionamento =
+        "update tb_evento_patrimonio set EventoId = ? where PatrimonioId = ?";
+      const valuesAtualizarRelacionamento = [eventoId, this.#Id];
+      const isUpdatedRelacionamento = await db.ExecutaComandoNonQuery(
+        queryAtualizarRelacionamento,
+        valuesAtualizarRelacionamento
+      );
+
+      //Atualiza nome do patrimonio
+      const queryAtualizaPatrimonio =
+        "update tb_patrimonios set PatrimonioNome = ? where PatrimonioId = ?";
+      const valuesAtualizaPatrimonio = [this.#Nome, this.#Id];
+      const isUpdatedPatrimonio = db.ExecutaComandoNonQuery(
+        queryAtualizaPatrimonio,
+        valuesAtualizaPatrimonio
+      );
+
+      return isUpdatedRelacionamento && isUpdatedPatrimonio;
+    }
+
+    //Atualiza nome de patrimonio não alocado
     const query =
       "update tb_patrimonios set PatrimonioNome = ? where PatrimonioId = ?";
-
     const values = [this.#Nome, this.#Id];
 
-    let isUpdated = await db.ExecutaComandoNonQuery(query, values);
+    isUpdated = await db.ExecutaComandoNonQuery(query, values);
 
     return isUpdated;
   }
