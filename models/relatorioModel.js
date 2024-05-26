@@ -6,7 +6,7 @@ class RelatorioModel {
   #Id;
   #TipoId;
   #DataEmissao;
-  #UsuarioId;
+  #Filtros;
 
   //GETTERS
   get Id() {
@@ -18,8 +18,8 @@ class RelatorioModel {
   get DataEmissao() {
     return this.#DataEmissao;
   }
-  get UsuarioId() {
-    return this.#UsuarioId;
+  get Filtros() {
+    return this.#Filtros;
   }
 
   //SETTERS
@@ -32,15 +32,69 @@ class RelatorioModel {
   set DataEmissao(dataEmissao) {
     this.#DataEmissao = dataEmissao;
   }
-  set UsuarioId(usuarioId) {
-    this.#UsuarioId = usuarioId;
+  set Filtros(filtros) {
+    this.#Filtros = filtros;
   }
 
-  constructor(id, tipoId, dataEmissao, usuarioId) {
+  constructor(id, tipoId, dataEmissao, filtros) {
     this.#Id = id;
     this.#TipoId = tipoId;
     this.#DataEmissao = dataEmissao;
-    this.#UsuarioId = usuarioId;
+    this.#Filtros = filtros;
+  }
+
+  async getTodosRelatorios() {
+    const query = "select * from tb_relatorios";
+
+    let rows = await db.ExecutaComando(query);
+
+    return rows.map(
+      (row) =>
+        new RelatorioModel(
+          row.RelatorioId,
+          row.RelatorioTipoId,
+          row.RelatorioData,
+          row.RelatorioFiltros
+        )
+    );
+  }
+
+  async getTiposRelatorio() {
+    const query = "select * from tb_relatorio_tipos";
+
+    let rows = await db.ExecutaComando(query);
+
+    return rows.map((row) => ({
+      id: row.RelatorioTipoId,
+      nome: row.RelatorioTipoNome,
+    }));
+  }
+
+  async getRelatorioEventos() {
+    //TODO: Pegar linhas para emissao do relatorio de eventos
+
+    let rows = [];
+
+    return rows.map((row) => {
+      let patrimonios = ""; //Pensar como agrupar os eventos concatenando seus patrimonios
+      return {
+        nome: row.EventoNome,
+        data: row.EventoData,
+        status: row.EventoStatus,
+        patrimonios,
+      };
+    });
+  }
+
+  async getRelatorioPatrimonios() {
+    //TODO: Pegar linhas para emissao do relatorio de patrimonios
+
+    let rows = [];
+
+    return rows.map((row) => ({
+      nome: row.PatrimonioNome,
+      evento: row.EventoNome,
+    }));
   }
 
   toJSON() {
@@ -48,9 +102,9 @@ class RelatorioModel {
       id: this.#Id,
       tipoId: this.#TipoId,
       dataEmissao: this.#DataEmissao,
-      usuarioId: this.#UsuarioId,
+      filtros: this.#Filtros,
     };
   }
 }
 
-export default RelatorioModel
+export default RelatorioModel;

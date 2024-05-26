@@ -61,6 +61,21 @@ create table tb_produtos (
     primary key (ProdutoId)
 );
 
+create table tb_relatorio_tipos (
+	RelatorioTipoId int not null auto_increment,
+    RelatorioTipoNome varchar (30),
+    primary key (RelatorioTipoId)
+);
+
+create table tb_relatorios (
+	RelatorioId int not null auto_increment,
+    RelatorioTipoId int not null,
+    RelatorioData date not null,
+    RelatorioFiltros varchar(300),
+    primary key (RelatorioId, UsuarioId),
+    foreign key (RelatorioTipoId) references tb_relatorio_tipos (RelatorioTipoId),
+);
+
 -------------- // -----------------------
 
 create table tb_vendas (
@@ -71,22 +86,5 @@ create table tb_vendas (
     primary key (VendaId, UsuarioId, ProdutoId),
     foreign key (UsuarioId) references tb_usuarios (UsuarioId),
     foreign key (ProdutoId) references tb_produtos (ProdutoId)
-);
-
-create table tb_relatorio_tipos (
-	RelatorioTipoId int not null auto_increment,
-    RelatorioTipoNome varchar (30),
-    RelatorioTipoFiltros enum('dataInicial', 'dataFinal', 'valor', 'quantidade', 'nome', 'status'),
-    primary key (RelatorioTipoId)
-);
-
-create table tb_relatorios (
-	RelatorioId int not null auto_increment,
-    RelatorioTipoId int not null,
-    DataEmissao datetime not null,
-    UsuarioId int not null,
-    primary key (RelatorioId, UsuarioId),
-    foreign key (RelatorioTipoId) references tb_relatorio_tipos (RelatorioTipoId),
-    foreign key (UsuarioId) references tb_usuarios (UsuarioId)
 );
 
