@@ -2,17 +2,39 @@
   <div class="container">
     <h1>Alterar Patrimonio</h1>
     <form id="patrimonio-form">
-      <div>
-        <div class="form-group">
-          <label for="patrimonioNome" class="form-label">Nome</label>
-          <input
-            type="text"
-            class="form-control"
-            id="patrimonioNome"
-            name="patrimonioNome"
-            placeholder="Nome do Patrimonio"
-          />
-        </div>
+      <div class="form-group">
+        <label for="patrimonioNome" class="form-label">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="patrimonioNome"
+          name="patrimonioNome"
+          placeholder="Nome do Patrimonio"
+        />
+      </div>
+      <div class="form-group d-none" id="eventosContainer">
+        <label for="eventoSelect" class="form-label"
+          >Para qual evento deseja alocar esse patrimonio?</label
+        >
+        <select
+          class="form-control"
+          id="eventoSelect"
+          placeholder="Nome do Evento"
+        >
+          <option
+            value=""
+            id="default-event-value"
+            selected
+            disabled
+            hidden
+          ></option>
+          <option value="0">Desalocar</option>
+          <% eventos.forEach(evento => { %>
+          <option class="evento-option" value="<%= evento.Id %>">
+            <%= evento.Nome %>
+          </option>
+          <% }) %>
+        </select>
       </div>
       <div class="mt-4">
         <a class="btn btn-secondary" href="/patrimonios">Voltar</a>
