@@ -4,7 +4,7 @@ let db = new DataBase();
 
 class RelatorioModel {
   #Id;
-  #TipoId;
+  #Tipo;
   #DataEmissao;
   #Filtros;
 
@@ -12,8 +12,8 @@ class RelatorioModel {
   get Id() {
     return this.#Id;
   }
-  get TipoId() {
-    return this.#TipoId;
+  get Tipo() {
+    return this.#Tipo;
   }
   get DataEmissao() {
     return this.#DataEmissao;
@@ -26,8 +26,8 @@ class RelatorioModel {
   set Id(id) {
     this.#Id = id;
   }
-  set TipoId(tipoId) {
-    this.#TipoId = tipoId;
+  set Tipo(tipo) {
+    this.#Tipo = tipo;
   }
   set DataEmissao(dataEmissao) {
     this.#DataEmissao = dataEmissao;
@@ -36,15 +36,18 @@ class RelatorioModel {
     this.#Filtros = filtros;
   }
 
-  constructor(id, tipoId, dataEmissao, filtros) {
+  constructor(id, tipo, dataEmissao, filtros) {
     this.#Id = id;
-    this.#TipoId = tipoId;
+    this.#Tipo = tipo;
     this.#DataEmissao = dataEmissao;
     this.#Filtros = filtros;
   }
 
   async getTodosRelatorios() {
-    const query = "select * from tb_relatorios";
+    const query = `
+      select R.RelatorioId, RT.RelatorioTipoNome, R.RelatorioData, R.RelatorioFiltros from tb_relatorios as R
+      inner join tb_relatorio_tipos as RT on R.RelatorioTipoId = RT.RelatorioTipoId;
+    `;
 
     let rows = await db.ExecutaComando(query);
 
@@ -52,7 +55,7 @@ class RelatorioModel {
       (row) =>
         new RelatorioModel(
           row.RelatorioId,
-          row.RelatorioTipoId,
+          row.RelatorioTipoNome,
           row.RelatorioData,
           row.RelatorioFiltros
         )
@@ -100,7 +103,7 @@ class RelatorioModel {
   toJSON() {
     return {
       id: this.#Id,
-      tipoId: this.#TipoId,
+      tipo: this.#Tipo,
       dataEmissao: this.#DataEmissao,
       filtros: this.#Filtros,
     };

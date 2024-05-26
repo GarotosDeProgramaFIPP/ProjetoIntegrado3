@@ -1,1 +1,27 @@
-<div>relatorios</div>
+<section>
+  <div class="container">
+    <h2>Relatorios emitidos:</h2>
+    <div class="row justify-center">
+      <div class="col col-12">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="text-start">Tipo</th>
+                <th scope="col" class="text-start">Data</th>
+                <th scope="col" class="text-start">Filtros</th>
+              </tr>
+            </thead>
+            <tbody id="table-relatorios-body">
+              <tr id="loading-row">
+                <td colspan="4">Carregando Relatorios...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="./js/relatorios/listagem.js"></script>

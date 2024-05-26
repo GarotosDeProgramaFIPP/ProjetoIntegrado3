@@ -70,9 +70,9 @@ create table tb_relatorio_tipos (
 create table tb_relatorios (
 	RelatorioId int not null auto_increment,
     RelatorioTipoId int not null,
-    RelatorioData date not null,
+    RelatorioData datetime not null,
     RelatorioFiltros varchar(300),
-    primary key (RelatorioId, UsuarioId),
+    primary key (RelatorioId),
     foreign key (RelatorioTipoId) references tb_relatorio_tipos (RelatorioTipoId),
 );
 
