@@ -79,12 +79,10 @@ class RelatorioModel {
     let rows = [];
 
     return rows.map((row) => {
-      let patrimonios = ""; //Pensar como agrupar os eventos concatenando seus patrimonios
       return {
         nome: row.EventoNome,
         data: row.EventoData,
         status: row.EventoStatus,
-        patrimonios,
       };
     });
   }

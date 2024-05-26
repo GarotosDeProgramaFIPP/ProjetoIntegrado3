@@ -25,4 +25,64 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#loading-row > td").text("Nenhum relatório encontrado");
       }
     });
+
+  fetch("relatorios/tipos", { method: "get" })
+    .then((r) => r.json())
+    .then((r) => {
+      if (r.ok && r.data.length) {
+        r.data.forEach((tipo) => {
+          $("#relatorioTipoSelect").append(`
+          <option value=${tipo.id}>${tipo.nome}</option>
+        `);
+        });
+      }
+    });
+
+  fetch("eventos/all", { method: "get" })
+    .then((r) => r.json())
+    .then((r) => {
+      if (r.ok && r.data.length) {
+        r.data.forEach((evento) => {
+          $("#filtroAlocamento").append(`
+        <option value=${evento.id}>Alocados em ${evento.nome}</option>
+      `);
+        });
+      }
+    });
+
+  fetch("eventos/possible-status", { method: "get" })
+    .then((r) => r.json())
+    .then((r) => {
+      if (r.ok && r.data.length) {
+        r.data.forEach((status) => {
+          $("#filtroStatus").append(`
+        <option value=${status.eventoStatusId}> ${status.eventoStatusDescricao}</option>
+      `);
+        });
+      }
+    });
+
+  $("#relatorioTipoSelect").on("change", function () {
+    const tipoId = $(this).val();
+    if (tipoId === "1") {
+      showEventFilters();
+      return;
+    }
+    showPatrimonyFilters();
+  });
+
+  function showPatrimonyFilters() {
+    $("#report-event-filters").removeClass("d-block");
+    $("#report-event-filters").addClass("d-none");
+
+    $("#report-patrimony-filters").removeClass("d-none");
+    $("#report-patrimony-filters").addClass("d-block");
+  }
+  function showEventFilters() {
+    $("#report-patrimony-filters").removeClass("d-block");
+    $("#report-patrimony-filters").addClass("d-none");
+
+    $("#report-event-filters").removeClass("d-none");
+    $("#report-event-filters").addClass("d-block");
+  }
 });

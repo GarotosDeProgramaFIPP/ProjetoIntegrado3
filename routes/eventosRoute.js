@@ -16,6 +16,7 @@ router.get(
 );
 //mothods routes
 router.get("/all", ctrl.getTodosEventos);
+router.get("/possible-status", ctrl.getPossibleStatus);
 router.get("/:id", ctrl.getEventoPorId);
 router.post("/", ctrl.addNovoEvento);
 router.put("/:id", ctrl.editarEvento);

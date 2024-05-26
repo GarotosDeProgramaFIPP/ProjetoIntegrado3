@@ -55,6 +55,23 @@ class EventosController {
     });
   }
 
+  async getPossibleStatus(req, res) {
+    let evenModel = new EventoModel();
+    let status = await evenModel.getEventoStatus();
+
+    if (status) {
+      res.send({
+        ok: true,
+        data: status,
+      });
+      return;
+    }
+    res.send({
+      ok: false,
+      message: "blablabla",
+    });
+  }
+
   async addNovoEvento(req, res) {
     const { nome, data, statusId } = req.body;
     let evenModel = new EventoModel(null, nome, data, statusId);

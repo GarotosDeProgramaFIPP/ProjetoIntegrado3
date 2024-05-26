@@ -10,5 +10,10 @@ let auth = new AuthMiddleware();
 router.get("/", auth.verificarUsuarioAdministrador, ctrl.listagemView);
 //mothods routes
 router.get("/all", auth.verificarUsuarioAdministrador, ctrl.getTodosRelatorios);
+router.get(
+  "/tipos",
+  auth.verificarUsuarioAdministrador,
+  ctrl.getTipoRelatorios
+);
 
 export default router;
