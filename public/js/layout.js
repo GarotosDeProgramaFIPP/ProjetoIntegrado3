@@ -268,7 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function logout() {
-  console.log("chamou");
   fetch("/logout", { method: "get" })
     .then((r) => r.json())
     .then((r) => {

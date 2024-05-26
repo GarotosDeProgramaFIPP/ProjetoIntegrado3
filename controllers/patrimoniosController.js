@@ -8,8 +8,14 @@ class PatrimoniosController {
   cadastrarView(req, res) {
     res.render("./patrimonios/cadastro");
   }
-  editarView(req, res) {
-    res.render("./patrimonios/edicao");
+  async editarView(req, res) {
+    let evenModel = new EventoModel();
+
+    const eventosNaoFinalizados = await evenModel
+      .getTodosEventos()
+      .then((r) => r.filter((evento) => evento.StatusNome !== "Finalizado"));
+
+    res.render("./patrimonios/edicao", { eventos: eventosNaoFinalizados });
   }
   async alocarView(req, res) {
     let patriModel = new PatrimonioModel();
@@ -55,9 +61,14 @@ class PatrimoniosController {
     let patrimonio = await patriModel.getPatrimonioPorId();
 
     if (patrimonio) {
+      let response = patrimonio.toJSON();
+      if (patrimonio.Alocado) {
+        let eventoId = await patriModel.getNomeEventoAlocadoPorPatrimonioId();
+        response.eventoAlocadoId = eventoId;
+      }
       res.send({
         ok: true,
-        data: patrimonio,
+        data: response,
       });
       return;
     }
@@ -87,10 +98,10 @@ class PatrimoniosController {
   }
 
   async editarPatrimonio(req, res) {
-    const { nome } = req.body;
+    const { nome, evento } = req.body;
     const id = req.params.id;
     let patriModel = new PatrimonioModel(id, nome);
-    let isUpdated = await patriModel.updatePatrimonioPorId();
+    let isUpdated = await patriModel.updatePatrimonioPorId(evento);
 
     if (isUpdated) {
       res.send({

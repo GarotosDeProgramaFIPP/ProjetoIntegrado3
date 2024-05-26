@@ -108,7 +108,7 @@ class PatrimonioModel {
   }
 
   async updatePatrimonioPorId(eventoId) {
-    if (this.#Alocado && eventoId) {
+    if (eventoId) {
       // Remove alocação
       if (eventoId === "0") {
         //Deleta relacionamento entre o patrimonio e evento
@@ -159,7 +159,7 @@ class PatrimonioModel {
       "update tb_patrimonios set PatrimonioNome = ? where PatrimonioId = ?";
     const values = [this.#Nome, this.#Id];
 
-    isUpdated = await db.ExecutaComandoNonQuery(query, values);
+    let isUpdated = await db.ExecutaComandoNonQuery(query, values);
 
     return isUpdated;
   }
@@ -184,6 +184,21 @@ class PatrimonioModel {
     );
 
     return isUpdated && isAdded;
+  }
+
+  async getNomeEventoAlocadoPorPatrimonioId() {
+    const query = `
+      select E.EventoId 
+      from (select EP.EventoId from tb_patrimonios as P 
+      inner join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId where EP.PatrimonioId = ?) as PEP 
+      inner join tb_eventos as E on PEP.EventoId = E.EventoId;
+    `;
+
+    const values = [this.#Id];
+
+    let rows = await db.ExecutaComando(query, values);
+
+    return rows[0].EventoId;
   }
 
   toJSON() {
