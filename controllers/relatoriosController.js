@@ -1,4 +1,5 @@
 import { RelatorioModel } from "../models/index.js";
+import exceljs from "exceljs";
 
 class RelatoriosController {
   listagemView(req, res) {
@@ -29,6 +30,47 @@ class RelatoriosController {
       ok: false,
       message: "Não foi possível encontrar tipos de relatórios",
     });
+  }
+
+  async requestReport(req, res) {
+    const workbook = new exceljs.Workbook();
+
+    const { tipo, ...filtros } = req.query;
+    const relatorioModel = new RelatorioModel(
+      null,
+      tipo,
+      new Date().toISOString().slice(0, 19).replace("T", " "),
+      filtros
+    );
+    if (tipo === "1") {
+      const worksheet = workbook.addWorksheet("Eventos");
+
+      worksheet.columns = [
+        { header: "Nome do Evento", key: "nome", width: 50 },
+        { header: "Data do Evento", key: "data", width: 15 },
+        { header: "Status do Evento", key: "status", width: 30 },
+      ];
+
+      let rows = await relatorioModel.generateRelatorioEventos();
+
+      rows.forEach((evento) => {
+        worksheet.addRow(evento);
+      });
+
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + "eventos.xlsx"
+      );
+
+      workbook.xlsx.write(res).then(() => res.end());
+      return;
+    }
+
+    let rows = await relatorioModel.generateRelatorioPatrimonios();
   }
 }
 

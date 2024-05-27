@@ -15,5 +15,6 @@ router.get(
   auth.verificarUsuarioAdministrador,
   ctrl.getTipoRelatorios
 );
+router.get("/request", ctrl.requestReport);
 
 export default router;

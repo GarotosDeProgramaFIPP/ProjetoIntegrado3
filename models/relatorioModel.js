@@ -1,3 +1,4 @@
+import { query } from "express";
 import DataBase from "../utils/database.js";
 
 let db = new DataBase();
@@ -62,6 +63,23 @@ class RelatorioModel {
     );
   }
 
+  async getRelatorioPorId() {
+    const query = "select * from tb_relatorios where RelatorioId = ?";
+    const values = [this.#Id];
+
+    let rows = await db.ExecutaComando(query, values);
+
+    return rows.map(
+      (row) =>
+        new RelatorioModel(
+          row.RelatorioId,
+          row.RelatorioTipoId,
+          row.RelatorioData,
+          row.RelatorioFiltros
+        )
+    )[0];
+  }
+
   async getTiposRelatorio() {
     const query = "select * from tb_relatorio_tipos";
 
@@ -73,22 +91,50 @@ class RelatorioModel {
     }));
   }
 
-  async getRelatorioEventos() {
-    //TODO: Pegar linhas para emissao do relatorio de eventos
+  async generateRelatorioEventos() {
+    let { dataDe, dataAte, status } = this.#Filtros;
+    let filtrosQuery = new URLSearchParams({
+      dataDe,
+      dataAte,
+      status,
+    }).toString();
+    const queryRegistro =
+      "insert into tb_relatorios (RelatorioTipoId, RelatorioData, RelatorioFiltros) values (1, ?, ?)";
+    const valuesRegistro = [this.#DataEmissao, filtrosQuery];
+    db.ExecutaComando(queryRegistro, valuesRegistro);
 
-    let rows = [];
+    let whereValue = "";
+
+    if (status) {
+      whereValue += `E.EventoStatusId = ${status}`;
+    }
+    if (dataDe) {
+      whereValue += `${whereValue && " and"} E.EventoData >= '${dataDe}'`;
+    }
+    if (dataAte) {
+      whereValue += `${whereValue && " and"} E.EventoData <= '${dataAte}'`;
+    }
+
+    const queryRelatorio = `
+      select E.EventoNome, E.EventoData, ES.EventoStatusDescricao from tb_eventos as E
+      inner join tb_evento_status as ES on E.EventoStatusId = ES.EventoStatusId
+      ${whereValue && "where " + whereValue}
+    `;
+
+    let rows = await db.ExecutaComando(queryRelatorio);
 
     return rows.map((row) => {
       return {
         nome: row.EventoNome,
-        data: row.EventoData,
-        status: row.EventoStatus,
+        data: new Date(row.EventoData).toLocaleDateString("pt-BR", { timeZone: "UTC" }),
+        status: row.EventoStatusDescricao,
       };
     });
   }
 
-  async getRelatorioPatrimonios() {
+  async generateRelatorioPatrimonios() {
     //TODO: Pegar linhas para emissao do relatorio de patrimonios
+    let filtros = this.#Filtros;
 
     let rows = [];
 
