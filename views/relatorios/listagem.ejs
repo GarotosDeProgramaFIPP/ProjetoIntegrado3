@@ -1,0 +1,68 @@
+<section>
+  <div class="container">
+    <h2>Emitir relatório:</h2>
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="relatorioTipoSelect" class="form-label">*Tipo:</label>
+        <select class="form-select" id="relatorioTipoSelect">
+          <option selected value="0">Selecione...</option>
+        </select>
+      </div>
+      <div id="report-patrimony-filters" class="d-none">
+        <div class="form-group">
+          <label for="filtroAlocamento" class="form-label">Alocamento:</label>
+          <select class="form-select" id="filtroAlocamento">
+            <option selected value="">Selecione...</option>
+            <option value="todos">Todos alocados</option>
+            <option value="nenhum">Todos não alocados</option>
+          </select>
+        </div>
+      </div>
+      <div id="report-event-filters" class="d-none">
+        <div class="form-group">
+          <label for="filtroDataDe" class="form-label">Data de:</label>
+          <input type="date" class="form-control" id="filtroDataDe" />
+        </div>
+        <div class="form-group">
+          <label for="filtroDataAte" class="form-label">Data até:</label>
+          <input type="date" class="form-control" id="filtroDataAte" />
+        </div>
+        <div class="form-group">
+          <label for="filtroStatus" class="form-label">Status:</label>
+          <select class="form-select" id="filtroStatus">
+            <option selected value="">Selecione...</option>
+          </select>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary my-2" id="button-emitir">
+        Emitir
+      </button>
+    </form>
+  </div>
+
+  <div class="container">
+    <h2>Relatórios emitidos:</h2>
+    <div class="row justify-center">
+      <div class="col col-12">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="text-start">Tipo</th>
+                <th scope="col" class="text-start">Data</th>
+                <th scope="col" class="text-start">Filtros</th>
+              </tr>
+            </thead>
+            <tbody id="table-relatorios-body">
+              <tr id="loading-row">
+                <td colspan="4">Carregando Relatorios...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="./js/relatorios/listagem.js"></script>

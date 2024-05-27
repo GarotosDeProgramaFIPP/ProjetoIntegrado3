@@ -5,6 +5,7 @@ import {
   produtosRoute,
   eventosRoute,
   patrimoniosRoute,
+  relatoriosRoute,
 } from "./routes/index.js";
 import cookieParser from "cookie-parser";
 const app = express();
@@ -35,6 +36,7 @@ app.use("/", publicasRoute);
 app.use("/produtos", produtosRoute);
 app.use("/eventos", eventosRoute);
 app.use("/patrimonios", patrimoniosRoute);
+app.use("/relatorios", relatoriosRoute);
 
 //inicia o nosso servidor web
 app.listen(5000, function () {
