@@ -78,26 +78,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $("#relatorioTipoSelect").on("change", function () {
     const tipoId = $(this).val();
+    hideFilters();
     if (tipoId === "1") {
       showEventFilters();
       return;
     }
-    showPatrimonyFilters();
+    if (tipoId === "2") {
+      showPatrimonyFilters();
+    }
   });
 
   function showPatrimonyFilters() {
-    $("#report-event-filters").removeClass("d-block");
-    $("#report-event-filters").addClass("d-none");
-
     $("#report-patrimony-filters").removeClass("d-none");
     $("#report-patrimony-filters").addClass("d-block");
   }
   function showEventFilters() {
-    $("#report-patrimony-filters").removeClass("d-block");
-    $("#report-patrimony-filters").addClass("d-none");
-
     $("#report-event-filters").removeClass("d-none");
     $("#report-event-filters").addClass("d-block");
+  }
+  function hideFilters() {
+    $("#report-event-filters").removeClass("d-block");
+    $("#report-event-filters").addClass("d-none");
+    $("#report-patrimony-filters").removeClass("d-block");
+    $("#report-patrimony-filters").addClass("d-none");
   }
 
   $("#button-emitir").on("click", function () {
@@ -117,6 +120,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const dataDe = $("#filtroDataDe").val();
       const dataAte = $("#filtroDataAte").val();
       const status = $("#filtroStatus").val();
+
+      if (dataDe && dataAte && new Date(dataAte) <= new Date(dataDe)) {
+        $("#filtroDataAte").css("border-color", "red");
+        $("#filtroDataAte")
+          .parent()
+          .append(
+            `<p class="text-danger">Data deve ser menor que data seleciona em "Data de"</p>`
+          );
+        return;
+      }
 
       filtros = new URLSearchParams({
         tipo: relatorioTipo,
@@ -138,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchRelatorios();
   });
 
-  $("#relatorioTipoSelect").on("focus", function () {
+  $("#relatorioTipoSelect, #filtroDataAte").on("focus", function () {
     $(this).css("border-color", "#dee2e6");
     $("p", $(this).parent()).remove();
   });

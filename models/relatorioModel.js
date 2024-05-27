@@ -47,7 +47,7 @@ class RelatorioModel {
   async getTodosRelatorios() {
     const query = `
       select R.RelatorioId, RT.RelatorioTipoNome, R.RelatorioData, R.RelatorioFiltros from tb_relatorios as R
-      inner join tb_relatorio_tipos as RT on R.RelatorioTipoId = RT.RelatorioTipoId;
+      inner join tb_relatorio_tipos as RT on R.RelatorioTipoId = RT.RelatorioTipoId order by R.RelatorioData desc;
     `;
 
     let rows = await db.ExecutaComando(query);
@@ -106,7 +106,7 @@ class RelatorioModel {
     let whereValue = "";
 
     if (status) {
-      whereValue += `E.EventoStatusId = ${status}`;
+      whereValue = `E.EventoStatusId = ${status}`;
     }
     if (dataDe) {
       whereValue += `${whereValue && " and"} E.EventoData >= '${dataDe}'`;
@@ -126,7 +126,9 @@ class RelatorioModel {
     return rows.map((row) => {
       return {
         nome: row.EventoNome,
-        data: new Date(row.EventoData).toLocaleDateString("pt-BR", { timeZone: "UTC" }),
+        data: new Date(row.EventoData).toLocaleDateString("pt-BR", {
+          timeZone: "UTC",
+        }),
         status: row.EventoStatusDescricao,
       };
     });
@@ -134,9 +136,52 @@ class RelatorioModel {
 
   async generateRelatorioPatrimonios() {
     //TODO: Pegar linhas para emissao do relatorio de patrimonios
-    let filtros = this.#Filtros;
+    let { alocamento } = this.#Filtros;
+    let filtrosQuery = new URLSearchParams({
+      alocamento,
+    }).toString();
 
-    let rows = [];
+    const queryRegistro =
+      "insert into tb_relatorios (RelatorioTipoId, RelatorioData, RelatorioFiltros) values (2, ?, ?)";
+    const valuesRegistro = [this.#DataEmissao, filtrosQuery];
+    db.ExecutaComando(queryRegistro, valuesRegistro);
+
+    if (alocamento === "nenhum") {
+      const query =
+        "select PatrimonioNome,'Não alocado' as 'EventoNome' from tb_patrimonios where PatrimonioAlocado = false";
+
+      let rows = await db.ExecutaComando(query);
+      return rows.map((row) => ({
+        nome: row.PatrimonioNome,
+        evento: row.EventoNome,
+      }));
+    }
+
+    if (alocamento === "todos") {
+      const query = `
+        select PEP.PatrimonioNome, E.EventoNome 
+        from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
+        left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
+        left join tb_eventos as E on PEP.EventoId = E.EventoId where E.EventoNome is not null
+    `;
+
+      let rows = await db.ExecutaComando(query);
+
+      return rows.map((row) => ({
+        nome: row.PatrimonioNome,
+        evento: row.EventoNome,
+      }));
+    }
+
+    const query = `
+    select PEP.PatrimonioNome, E.EventoNome 
+    from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
+    left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
+    left join tb_eventos as E on PEP.EventoId = E.EventoId where E.EventoId = ?;
+    `;
+    const values = [Number(alocamento)];
+
+    let rows = await db.ExecutaComando(query, values);
 
     return rows.map((row) => ({
       nome: row.PatrimonioNome,

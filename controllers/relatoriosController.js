@@ -69,8 +69,33 @@ class RelatoriosController {
       workbook.xlsx.write(res).then(() => res.end());
       return;
     }
+    if (tipo === "2") {
+      const worksheet = workbook.addWorksheet("Patrimonios");
 
-    let rows = await relatorioModel.generateRelatorioPatrimonios();
+      worksheet.columns = [
+        { header: "Nome do Patrimônio", key: "nome", width: 50 },
+        { header: "Evento alocado", key: "evento", width: 30 },
+      ];
+
+      let rows = await relatorioModel.generateRelatorioPatrimonios();
+
+      rows.forEach((patrimonio) => {
+        worksheet.addRow(patrimonio);
+      });
+
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + "patrimonios.xlsx"
+      );
+
+      workbook.xlsx.write(res).then(() => res.end());
+      return;
+    }
+    res.send({ ok: false, message: "Tipo de relatório não selecionado!" });
   }
 }
 
