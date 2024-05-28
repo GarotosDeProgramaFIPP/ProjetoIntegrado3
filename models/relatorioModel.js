@@ -135,7 +135,6 @@ class RelatorioModel {
   }
 
   async generateRelatorioPatrimonios() {
-    //TODO: Pegar linhas para emissao do relatorio de patrimonios
     let { alocamento } = this.#Filtros;
     let filtrosQuery = new URLSearchParams({
       alocamento,
@@ -146,26 +145,43 @@ class RelatorioModel {
     const valuesRegistro = [this.#DataEmissao, filtrosQuery];
     db.ExecutaComando(queryRegistro, valuesRegistro);
 
-    if (alocamento === "nenhum") {
-      const query =
-        "select PatrimonioNome,'Não alocado' as 'EventoNome' from tb_patrimonios where PatrimonioAlocado = false";
+    if (alocamento) {
+      if (alocamento === "nenhum") {
+        const query =
+          "select PatrimonioNome,'Não alocado' as 'EventoNome' from tb_patrimonios where PatrimonioAlocado = false";
 
-      let rows = await db.ExecutaComando(query);
-      return rows.map((row) => ({
-        nome: row.PatrimonioNome,
-        evento: row.EventoNome,
-      }));
-    }
+        let rows = await db.ExecutaComando(query);
+        return rows.map((row) => ({
+          nome: row.PatrimonioNome,
+          evento: row.EventoNome,
+        }));
+      }
 
-    if (alocamento === "todos") {
-      const query = `
+      if (alocamento === "todos") {
+        const query = `
         select PEP.PatrimonioNome, E.EventoNome 
         from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
         left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
         left join tb_eventos as E on PEP.EventoId = E.EventoId where E.EventoNome is not null
     `;
 
-      let rows = await db.ExecutaComando(query);
+        let rows = await db.ExecutaComando(query);
+
+        return rows.map((row) => ({
+          nome: row.PatrimonioNome,
+          evento: row.EventoNome,
+        }));
+      }
+
+      const query = `
+      select PEP.PatrimonioNome, E.EventoNome 
+      from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
+      left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
+      left join tb_eventos as E on PEP.EventoId = E.EventoId where E.EventoId = ?;
+      `;
+      const values = [Number(alocamento)];
+
+      let rows = await db.ExecutaComando(query, values);
 
       return rows.map((row) => ({
         nome: row.PatrimonioNome,
@@ -174,14 +190,13 @@ class RelatorioModel {
     }
 
     const query = `
-    select PEP.PatrimonioNome, E.EventoNome 
-    from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
-    left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
-    left join tb_eventos as E on PEP.EventoId = E.EventoId where E.EventoId = ?;
-    `;
-    const values = [Number(alocamento)];
+      select PEP.PatrimonioNome, if( E.EventoNome is null, 'Não alocado', E.EventoNome) as 'EventoNome' 
+      from (select P.PatrimonioId, P.PatrimonioNome, EP.EventoId from tb_patrimonios as P 
+      left join tb_evento_patrimonio as EP on P.PatrimonioId = EP.PatrimonioId) as PEP 
+      left join tb_eventos as E on PEP.EventoId = E.EventoId
+      `;
 
-    let rows = await db.ExecutaComando(query, values);
+    let rows = await db.ExecutaComando(query);
 
     return rows.map((row) => ({
       nome: row.PatrimonioNome,
