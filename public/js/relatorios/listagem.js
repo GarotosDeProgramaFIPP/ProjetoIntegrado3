@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
   $("#button-emitir").on("click", function () {
     const relatorioTipoElement = $("#relatorioTipoSelect");
     const relatorioTipo = relatorioTipoElement.val();
+    const tipoArquivo = $("#arquivoTipoSelect").val();
     let filtros = "";
 
     if (relatorioTipo === "0") {
@@ -132,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       filtros = new URLSearchParams({
+        tipoArquivo,
         tipo: relatorioTipo,
         dataDe,
         dataAte,
@@ -141,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const alocamento = $("#filtroAlocamento").val();
 
       filtros = new URLSearchParams({
+        tipoArquivo,
         tipo: relatorioTipo,
         alocamento,
       });
