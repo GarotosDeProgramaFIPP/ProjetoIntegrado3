@@ -92,11 +92,12 @@ class RelatorioModel {
   }
 
   async generateRelatorioEventos() {
-    let { dataDe, dataAte, status } = this.#Filtros;
+    let { dataDe, dataAte, status, tipoArquivo } = this.#Filtros;
     let filtrosQuery = new URLSearchParams({
       dataDe,
       dataAte,
       status,
+      tipoArquivo,
     }).toString();
     const queryRegistro =
       "insert into tb_relatorios (RelatorioTipoId, RelatorioData, RelatorioFiltros) values (1, ?, ?)";
@@ -135,9 +136,10 @@ class RelatorioModel {
   }
 
   async generateRelatorioPatrimonios() {
-    let { alocamento } = this.#Filtros;
+    let { alocamento, tipoArquivo } = this.#Filtros;
     let filtrosQuery = new URLSearchParams({
       alocamento,
+      tipoArquivo,
     }).toString();
 
     const queryRegistro =

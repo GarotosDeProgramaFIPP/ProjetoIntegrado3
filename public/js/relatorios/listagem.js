@@ -90,16 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showPatrimonyFilters() {
     $("#report-patrimony-filters").removeClass("d-none");
-    $("#report-patrimony-filters").addClass("d-block");
+    $("#report-patrimony-filters").addClass("d-flex");
   }
   function showEventFilters() {
     $("#report-event-filters").removeClass("d-none");
-    $("#report-event-filters").addClass("d-block");
+    $("#report-event-filters").addClass("d-flex");
   }
   function hideFilters() {
-    $("#report-event-filters").removeClass("d-block");
+    $("#report-event-filters").removeClass("d-flex");
     $("#report-event-filters").addClass("d-none");
-    $("#report-patrimony-filters").removeClass("d-block");
+    $("#report-patrimony-filters").removeClass("d-flex");
     $("#report-patrimony-filters").addClass("d-none");
   }
 

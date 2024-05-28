@@ -35,7 +35,7 @@ class RelatoriosController {
   }
 
   async requestReport(req, res) {
-    const { tipo, tipoArquivo, ...filtros } = req.query;
+    const { tipo, ...filtros } = req.query;
 
     if (tipo) {
       const workbook = new exceljs.Workbook();
@@ -76,7 +76,7 @@ class RelatoriosController {
         });
       }
 
-      if (tipoArquivo === "pdf") {
+      if (filtros.tipoArquivo === "pdf") {
         let buffer = await workbook.xlsx.writeBuffer();
 
         const libreConvert = bluebird.promisify(libre.convert);
