@@ -2,13 +2,26 @@
   <div class="container">
     <h2>Emitir relatório:</h2>
     <form class="form-inline">
-      <div class="form-group">
-        <label for="relatorioTipoSelect" class="form-label">*Tipo:</label>
-        <select class="form-select" id="relatorioTipoSelect">
-          <option selected value="0">Selecione...</option>
-        </select>
+      <div class="d-flex gap-4 mb-4">
+        <div class="form-group">
+          <label for="relatorioTipoSelect" class="form-label"
+            >*Tipo de relatório:</label
+          >
+          <select class="form-select" id="relatorioTipoSelect">
+            <option selected value="0">Selecione...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="arquivoTipoSelect" class="form-label"
+            >Tipo de arquivo:</label
+          >
+          <select class="form-select" id="arquivoTipoSelect">
+            <option selected value="exel">Excel</option>
+            <option value="pdf">PDF</option>
+          </select>
+        </div>
       </div>
-      <div id="report-patrimony-filters" class="d-none">
+      <div id="report-patrimony-filters" class="d-none mb-2">
         <div class="form-group">
           <label for="filtroAlocamento" class="form-label">Alocamento:</label>
           <select class="form-select" id="filtroAlocamento">
@@ -18,7 +31,7 @@
           </select>
         </div>
       </div>
-      <div id="report-event-filters" class="d-none">
+      <div id="report-event-filters" class="d-none gap-4 mb-2">
         <div class="form-group">
           <label for="filtroDataDe" class="form-label">Data de:</label>
           <input type="date" class="form-control" id="filtroDataDe" />

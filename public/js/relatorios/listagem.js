@@ -78,31 +78,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   $("#relatorioTipoSelect").on("change", function () {
     const tipoId = $(this).val();
+    hideFilters();
     if (tipoId === "1") {
       showEventFilters();
       return;
     }
-    showPatrimonyFilters();
+    if (tipoId === "2") {
+      showPatrimonyFilters();
+    }
   });
 
   function showPatrimonyFilters() {
-    $("#report-event-filters").removeClass("d-block");
-    $("#report-event-filters").addClass("d-none");
-
     $("#report-patrimony-filters").removeClass("d-none");
-    $("#report-patrimony-filters").addClass("d-block");
+    $("#report-patrimony-filters").addClass("d-flex");
   }
   function showEventFilters() {
-    $("#report-patrimony-filters").removeClass("d-block");
-    $("#report-patrimony-filters").addClass("d-none");
-
     $("#report-event-filters").removeClass("d-none");
-    $("#report-event-filters").addClass("d-block");
+    $("#report-event-filters").addClass("d-flex");
+  }
+  function hideFilters() {
+    $("#report-event-filters").removeClass("d-flex");
+    $("#report-event-filters").addClass("d-none");
+    $("#report-patrimony-filters").removeClass("d-flex");
+    $("#report-patrimony-filters").addClass("d-none");
   }
 
   $("#button-emitir").on("click", function () {
     const relatorioTipoElement = $("#relatorioTipoSelect");
     const relatorioTipo = relatorioTipoElement.val();
+    const tipoArquivo = $("#arquivoTipoSelect").val();
     let filtros = "";
 
     if (relatorioTipo === "0") {
@@ -118,7 +122,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const dataAte = $("#filtroDataAte").val();
       const status = $("#filtroStatus").val();
 
+      if (dataDe && dataAte && new Date(dataAte) <= new Date(dataDe)) {
+        $("#filtroDataAte").css("border-color", "red");
+        $("#filtroDataAte")
+          .parent()
+          .append(
+            `<p class="text-danger">Data deve ser menor que data seleciona em "Data de"</p>`
+          );
+        return;
+      }
+
       filtros = new URLSearchParams({
+        tipoArquivo,
         tipo: relatorioTipo,
         dataDe,
         dataAte,
@@ -128,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const alocamento = $("#filtroAlocamento").val();
 
       filtros = new URLSearchParams({
+        tipoArquivo,
         tipo: relatorioTipo,
         alocamento,
       });
@@ -138,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchRelatorios();
   });
 
-  $("#relatorioTipoSelect").on("focus", function () {
+  $("#relatorioTipoSelect, #filtroDataAte").on("focus", function () {
     $(this).css("border-color", "#dee2e6");
     $("p", $(this).parent()).remove();
   });
