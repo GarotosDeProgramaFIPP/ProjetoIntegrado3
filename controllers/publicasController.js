@@ -41,6 +41,7 @@ class PublicasController {
 
       if (usuario) {
         res.cookie("usuarioLogado", usuario.Id);
+        res.cookie("usuarioTipo", tipo);
 
         res.send({ ok: true, message: "Usuário logado com sucesso!" });
         return;
@@ -56,6 +57,7 @@ class PublicasController {
   }
   logout(req, res) {
     res.clearCookie("usuarioLogado");
+    res.clearCookie("usuarioTipo");
     res.send({ ok: true, message: "Usuário deslogado com sucesso!" });
   }
 }
