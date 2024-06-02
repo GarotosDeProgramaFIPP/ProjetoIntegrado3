@@ -55,6 +55,55 @@ class PublicasController {
       message: "Login, senha e tipo de usuário devem ser preenchidos!",
     });
   }
+
+  async addNovoUsuario(req, res) {
+    const {
+      nome,
+      email,
+      senha,
+      telefone,
+      endereco,
+      documento,
+      administrador,
+      voluntario,
+      tipo,
+    } = req.body;
+
+    if (nome && email && senha && telefone && endereco && documento && tipo) {
+      let usuarioModel = new UsuarioModel(
+        null,
+        nome,
+        email,
+        senha,
+        telefone,
+        endereco,
+        documento,
+        administrador,
+        voluntario
+      );
+
+      let usuarioCriado = await usuarioModel.addNovoUsuario(tipo);
+
+      if (usuarioCriado) {
+        res.send({
+          ok: true,
+          message: "Usuário criado com sucesso!",
+        });
+        return;
+      }
+
+      res.send({
+        ok: false,
+        message: "Não foi possível criar usuário!",
+      });
+    }
+
+    res.send({
+      ok: false,
+      message: "Todos os campos devem ser preenchidos!",
+    });
+  }
+
   logout(req, res) {
     res.clearCookie("usuarioLogado");
     res.clearCookie("usuarioTipo");

@@ -25,6 +25,7 @@ app.use(cookieParser());
 
 //gerencia bibliotecas
 app.use("/jquery", express.static("./node_modules/jquery/dist/"));
+app.use("/jquery-mask", express.static("./node_modules/jquery-mask-plugin/dist/"));
 app.use("/bootstrap", express.static("./node_modules/bootstrap/dist/"));
 app.use(
   "/bootstrap-icons",

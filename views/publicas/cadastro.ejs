@@ -1,24 +1,121 @@
-
-
-<div class="wropper">
-    <p>Criar Conta</p>
-
-    <div class="formulario">
-        <form>
-
-            <input placeholder="Nome completo" type="text" name="Nome" required/>
-            <input placeholder="Email" type="email" name="email" required/>
-            <input placeholder="Senha" type="password" name="Senha" required/>
-            <input placeholder="Confirme a senha" type="password" name="senha-confirmar" required/>
-            <input placeholder="CPF/CNPJ" type="number" name="CPF" required/>
-            <input placeholder="Celular" type="number" name="celular" required/>
-            <input placeholder="Endereço" type="text" name="endereco" required/>
-            <input type="radio" name="pf" value="pessoafisica" checked> CPF
-            <input type="radio" name="pj" value="pessoajuridica"> CNPJ
-
-            <button class="btn">Criar conta</button>
-            
-
-        </form>
+<div class="breadcrumbs">
+  <nav>
+    <div class="container">
+      <ol>
+        <li><a href="/">Inicio</a></li>
+        <li>Cadastrar</li>
+      </ol>
     </div>
+  </nav>
 </div>
+
+<div class="d-flex w-100 justify-content-center">
+  <div class="container m-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <label for="nome-input" class="form-label"
+                  >Nome / Razão Social</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome-input"
+                  placeholder="Digite seu nome / razão social"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="endereco-input" class="form-label">Endereço</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="endereco-input"
+                  placeholder="Digite seu endereço"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="telefone-input" class="form-label">Telefone</label>
+                <input
+                  type="text"
+                  class="form-control phone-mask"
+                  id="telefone-input"
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="documento-input" class="form-label"
+                  >CPF / CNPJ</label
+                >
+                <input
+                  type="text"
+                  class="form-control doc-mask"
+                  id="documento-input"
+                  placeholder="Digite seu CPF / CNPJ"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email-input" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control mail-mask"
+                  id="email-input"
+                  placeholder="Digite seu email"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="senha-input" class="form-label">Senha</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="senha-input"
+                  placeholder="Digite sua senha"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Tipo de Usuário</label>
+                <div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="tipo-radio"
+                      value="PF"
+                      checked
+                    />
+                    <label class="form-check-label" for="pf">PF</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="tipo-radio"
+                      value="PJ"
+                    />
+                    <label class="form-check-label" for="pj">PJ</label>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="error-message"
+                class="justify-content-center m-1"
+                style="color: red"
+              ></div>
+              <button
+                type="button"
+                id="cadastrar-button"
+                class="btn btn-primary w-100"
+              >
+                Cadastrar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/usuario/cadastro.js"></script>
