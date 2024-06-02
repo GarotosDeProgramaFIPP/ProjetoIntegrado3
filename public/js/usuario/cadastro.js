@@ -4,15 +4,29 @@ document.addEventListener("DOMContentLoaded", function () {
     $("#error-message").css("display", "none");
   });
 
-  $("#login-button").on("click", function () {
+  $("#cadastrar-button").on("click", function () {
+    let nome = $("#nome-input").val();
     let email = $("#email-input").val();
     let senha = $("#senha-input").val();
+    let telefone = $("#telefone-input").val();
+    let endereco = $("#endereco-input").val();
+    let documento = $("#documento-input").val();
     let tipo = $('input[name="tipo-radio"]:checked').val();
 
-    const payload = { email, senha, tipo };
+    if (validaCampos(nome, email, senha, telefone, endereco, documento, tipo)) {
+      const payload = {
+        nome,
+        email,
+        senha,
+        telefone,
+        endereco,
+        documento,
+        administrador: true,
+        voluntario: true,
+        tipo,
+      };
 
-    if (validaCampos(email, senha, tipo)) {
-      fetch("/login", {
+      fetch("/cadastro", {
         method: "post",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(payload),
@@ -20,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((r) => r.json())
         .then((r) => {
           if (r.ok) {
-            window.location.href = "/";
+            alert(r.message);
+            window.location.href = "/login";
           } else {
             $("#error-message").css("display", "flex");
             $("#error-message").text(r.message);
@@ -30,13 +45,25 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function validaCampos(email, senha, tipo) {
+function validaCampos(nome, email, senha, telefone, endereco, documento, tipo) {
   let inputsComErro = [];
-  if (!email) {
+  if (!nome) {
+    inputsComErro.push("#nome-input");
+  }
+  if (!email || !(email.includes("@") && email.includes("."))) {
     inputsComErro.push("#email-input");
   }
   if (!senha) {
     inputsComErro.push("#senha-input");
+  }
+  if (!telefone) {
+    inputsComErro.push("#telefone-input");
+  }
+  if (!endereco) {
+    inputsComErro.push("#endereco-input");
+  }
+  if (!documento) {
+    inputsComErro.push("#documento-input");
   }
 
   if (inputsComErro.length) {

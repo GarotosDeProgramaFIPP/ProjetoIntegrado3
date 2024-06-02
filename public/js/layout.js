@@ -1,6 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
   "use strict";
 
+  $(".phone-mask").mask("(00) 00000-0000");
+
+  $(".money-mask").mask('000.000.000.000.000,00', {reverse: true});
+
+  $(".doc-mask").on("keydown", function () {
+    try {
+      $(".doc-mask").unmask();
+    } catch (e) {}
+
+    var tamanho = $(".doc-mask").val().length;
+
+    if (tamanho < 11) {
+      $(".doc-mask").mask("000.000.000-00");
+    } else {
+      $(".doc-mask").mask("00.000.000/0000-00");
+    }
+
+    // ajustando foco
+    var elem = this;
+    setTimeout(function () {
+      // mudo a posição do seletor
+      elem.selectionStart = elem.selectionEnd = 10000;
+    }, 0);
+    // reaplico o valor para mudar o foco
+    var currentValue = $(this).val();
+    $(this).val("");
+    $(this).val(currentValue);
+  });
+
   const preloader = document.querySelector("#preloader");
   if (preloader) {
     window.addEventListener("load", () => {

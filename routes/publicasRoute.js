@@ -13,6 +13,7 @@ router.get("/doacao", auth.verificarUsuarioLogado, ctrl.doacaoView);
 router.get("/contato", auth.verificarUsuarioLogado, ctrl.contatoView);
 router.get("/login", auth.verificarUsuarioLogado, ctrl.loginView);
 router.get("/cadastro", auth.verificarUsuarioLogado, ctrl.cadastroView);
+router.post("/cadastro", auth.verificarUsuarioLogado, ctrl.addNovoUsuario);
 router.get("/logout", auth.verificarUsuarioLogado, ctrl.logout);
 router.post("/login", ctrl.realizarLogin);
 

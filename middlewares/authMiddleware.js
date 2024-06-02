@@ -6,11 +6,9 @@ class AuthMiddleware {
       let usuarioId = req.cookies.usuarioLogado;
       let usuarioTipo = req.cookies.usuarioTipo;
       let usuario = new UsuarioModel(usuarioId);
-      usuario = await usuario.getUsuarioPorId();
+      usuario = await usuario.getUsuarioPorId(usuarioTipo);
       if (usuario) {
-        let isAdmin =
-          usuarioTipo.toLowerCase() === "pj" ? false : usuario.Administrador;
-        res.locals.usuarioLogado = { ...usuario, Administrador: isAdmin };
+        res.locals.usuarioLogado = usuario;
       }
     }
     next();
@@ -20,11 +18,8 @@ class AuthMiddleware {
     if (req.cookies != undefined && req.cookies.usuarioLogado != null) {
       let usuarioId = req.cookies.usuarioLogado;
       let usuarioTipo = req.cookies.usuarioTipo;
-      if (usuarioTipo.toLowerCase() === "pj") {
-        res.redirect("/nao-autorizado");
-      }
       let usuario = new UsuarioModel(usuarioId);
-      usuario = await usuario.getUsuarioPorId();
+      usuario = await usuario.getUsuarioPorId(usuarioTipo);
       if (!usuario) res.redirect("/login");
       if (usuario.Administrador) {
         res.locals.usuarioLogado = usuario;

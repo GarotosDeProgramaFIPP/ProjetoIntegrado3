@@ -114,12 +114,16 @@ class UsuarioModel {
     );
   }
 
-  async getUsuarioPorId() {
-    const query = "select * from tb_usuarios_pf where UsuarioId = ?";
+  async getUsuarioPorId(userType) {
+    const queryPF = "select * from tb_usuarios_pf where UsuarioId = ?";
+    const queryPJ = "select * from tb_usuarios_pj where UsuarioId = ?";
     //TODO: diferenciar pf de pj
     const values = [this.#Id];
 
-    let rows = await db.ExecutaComando(query, values);
+    let rows = await db.ExecutaComando(
+      userType.toLowerCase() === "pf" ? queryPF : queryPJ,
+      values
+    );
 
     return rows.map(
       (row) =>
@@ -161,6 +165,58 @@ class UsuarioModel {
           row.UsuarioVoluntario
         )
     )[0];
+  }
+
+  async addNovoUsuario(userType) {
+    let query = "";
+    let values;
+    if (userType.toLowerCase() === "pf") {
+      query = `insert into tb_usuarios_pf 
+      (
+        UsuarioNome,
+        UsuarioLogin,
+        UsuarioSenha,
+        UsuarioTelefone,
+        UsuarioEndereco,
+        UsuarioAdministrador,
+        UsuarioVoluntario,
+        UsuarioDocumento
+      ) values (?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      values = [
+        this.#Nome,
+        this.#Login,
+        this.#Senha,
+        this.#Telefone,
+        this.#Endereco,
+        this.#Administrador,
+        this.#Voluntario,
+        this.#Documento,
+      ];
+    } else {
+      query = `insert into tb_usuarios_pj 
+      (
+        UsuarioNome,
+        UsuarioLogin,
+        UsuarioSenha,
+        UsuarioTelefone,
+        UsuarioEndereco,
+        UsuarioDocumento
+      ) values (?, ?, ?, ?, ?, ?)
+      `;
+      values = [
+        this.#Nome,
+        this.#Login,
+        this.#Senha,
+        this.#Telefone,
+        this.#Endereco,
+        this.#Documento,
+      ];
+    }
+
+    let usuarioCriado = await db.ExecutaComandoNonQuery(query, values);
+
+    return usuarioCriado;
   }
 
   toJSON() {
