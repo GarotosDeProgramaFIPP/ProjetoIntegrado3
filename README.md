@@ -5,7 +5,7 @@ Sistema de gerenciamento de ong desenvolvido para a disciplina projeto integrado
 
 ## How to start
 ```sh
-git clone https://github.com/GarotosDeProgramaFIPP/ProjetoIntegrado3.git
+git clone https://github.com/felipeamignone/ProjetoIntegrado3.git
 npm i
 npm run dev
 ```
