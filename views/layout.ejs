@@ -53,14 +53,18 @@
             <li><a href="/doacao">Doar</a></li>
             <li><a href="/contato">Contato</a></li>
             <li><div class="menu-separator"></div></li>
+            <% if (locals?.usuarioLogado) { %>
             <li>
-              <% if (locals?.usuarioLogado) { %>
               <a onclick="logout()" href="">Sair</a>
-              <% } else { %>
-              <a href="/login">Entrar</a>
-              <a href="/cadastro">Cadastrar</a>
-              <% } %>
             </li>
+            <% } else { %>
+            <li>
+              <a href="/login">Entrar</a>
+            </li>
+            <li>
+              <a href="/cadastro">Cadastrar</a>
+            </li>
+            <% } %>
           </ul>
         </nav>
 
