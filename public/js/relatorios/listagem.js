@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   $("#button-emitir").on("click", function () {
+    showLoading();
     const relatorioTipoElement = $("#relatorioTipoSelect");
     const relatorioTipo = relatorioTipoElement.val();
     const tipoArquivo = $("#arquivoTipoSelect").val();
@@ -114,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
       relatorioTipoElement
         .parent()
         .append(`<p class="text-danger">Campo obrigatório</p>`);
+      hideLoading(500);
       return;
     }
 
@@ -149,20 +151,33 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    window.open("/relatorios/request?" + filtros, "_blank");
+    window.open("/relatorios/request?" + filtros, "_self");
 
     fetchRelatorios();
+    hideLoading(3000);
   });
 
   $("#relatorioTipoSelect, #filtroDataAte").on("focus", function () {
     $(this).css("border-color", "#dee2e6");
     $("p", $(this).parent()).remove();
   });
+
+  function showLoading() {
+    $(".spinner-container").removeClass("d-none");
+    $(".spinner-container").addClass("d-fixed");
+  }
+
+  function hideLoading(timeOut) {
+    setTimeout(() => {
+      $(".spinner-container").removeClass("d-fixed");
+      $(".spinner-container").addClass("d-none");
+    }, timeOut);
+  }
 });
 
 function reRequest(filtros, tipo) {
   window.open(
     `/relatorios/request?${filtros}&tipo=${tipo === "Eventos" ? "1" : "2"}`,
-    "_blank"
+    "_self"
   );
 }

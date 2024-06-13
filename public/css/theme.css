@@ -38,6 +38,22 @@ a:hover {
   padding: 0;
 }
 
+.spinner-container {
+  width: 100%;
+  z-index: 999;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #00000047;
+}
+
+.spinner-container > div {
+  position: relative;
+  top: 50%;
+  left: 50%;
+}
+
 .btn {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
